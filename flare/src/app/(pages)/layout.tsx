@@ -14,6 +14,7 @@ import {
 
 import "@/styles/main.scss";
 import Image from "next/image";
+import ConnectWalletButton from "@/components/ui/ConnectWalletButton";
 
 export default function MainLayout({ children }: Children) {
   return (
@@ -46,7 +47,7 @@ export default function MainLayout({ children }: Children) {
               </div>
 
               <div className="bottom-section">
-                <button className="connect-wallet">Connect Wallet</button>
+                <ConnectWalletButton />
                 <div className="external-links">
                   <div className="nav-item">
                     <div className="profile-container">
