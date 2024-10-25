@@ -1,6 +1,6 @@
 import forge from "node-forge";
 import { createHash }from "crypto";
-let rsa = forge.pki.rsa
+const rsa = forge.pki.rsa
 export const generateKeys = () => {
     const keypair = rsa.generateKeyPair({bits: 2048});
     const publicKey = forge.pki.publicKeyToPem(keypair.publicKey);
@@ -20,16 +20,6 @@ export const decryptData = (data: string, privKey: string) => {
     const decrypted = privKeyObj.decrypt(decoded, 'RSA-OAEP');
     return forge.util.decodeUtf8(decrypted);
 };
-
-// Usage
-const { publicKey, privateKey } = generateKeys();
-const message = "Hello, RSA Encryption!";
-const encrypted = encryptData(message, publicKey);
-const decrypted = decryptData(encrypted, privateKey);
-
-console.log("Original Message:", message);
-console.log("Encrypted Message:", encrypted);
-console.log("Decrypted Message:", decrypted);
 
 const hashFunc = (encrypted: string) => {
     return createHash('sha256').update(encrypted).digest('hex')
