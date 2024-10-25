@@ -26,9 +26,12 @@ contract FlareDataStorage {
     }
 
     // Function to create a new data entry
-    function createDataEntry(uint256 dataId, bytes32 dataHash, string memory dataResult) external {
+    function createDataEntry(uint256 dataId, bytes32 dataHash) external {
         // Ensure the dataId is unique
         require(dataEntries[dataId].dataId == 0, "Data entry with this ID already exists");
+
+        // Create an empty dataResult
+        string memory dataResult = "";
 
         // Store the new data entry
         dataEntries[dataId] = DataEntry({
