@@ -161,6 +161,36 @@ body {
       margin: 0;
     }
   }
+
+  .input-container {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+
+    input {
+      flex: 1;
+      height: 48px;
+      padding: 0 16px;
+      border-radius: 12px;
+      border: 1px solid $border-color;
+      background-color: $bg-darker;
+      color: $white;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    button {
+      @include button-base;
+      background-color: $primary-blue;
+      color: $white;
+      font-weight: 700;
+      height: 48px;
+
+      &:hover {
+        background-color: darken($primary-blue, 10%);
+      }
+    }
+  }
 }
 
 // Tabs
@@ -207,7 +237,7 @@ h2 {
   margin: 0;
 }
 
-.transactions {
+.container {
   padding: 12px 16px;
 
   .table-container {
@@ -220,6 +250,14 @@ h2 {
     table {
       flex: 1;
       border-collapse: collapse;
+
+      tr {
+        border-top: 1px solid $border-color;
+
+        &:first-child {
+          border-top: none;
+        }
+      }
 
       th {
         background-color: $bg-darker;
@@ -235,22 +273,128 @@ h2 {
         padding: 8px 16px;
         color: $text-light;
         font-size: 14px;
-        border-top: 1px solid $border-color;
 
         &:last-child {
           font-weight: 700;
         }
       }
 
-      .pair-button,
-      .type-button,
-      .status-button {
+      button {
         @include button-base;
         background-color: $nav-bg;
         color: $white;
         width: 100%;
       }
     }
+  }
+}
+
+// Train Container
+.train-container {
+  display: flex;
+  flex-direction: column;
+  margin: 16px;
+  border-radius: 12px;
+  padding: 16px 16px 0 16px;
+  background-color: $bg-darker;
+
+  .train-container-inner {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+
+    .station-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      .station-time {
+        color: $white;
+        font-size: 2rem;
+        font-weight: 500;
+        line-height: 1.2;
+        padding: 0;
+      }
+
+      .station-name {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        .station-name-inner {
+          color: $white;
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 1.2;
+          margin: 0;
+        }
+
+        .station-plat-inner {
+          color: $text-light;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 1.2;
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+.train-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  gap: 16px;
+  height: 100%;
+
+  p {
+    font-size: 32px;
+    font-weight: 700;
+    color: $white;
+  }
+
+  button {
+    font-size: 20px !important;
+    width: auto !important;
+
+  }
+}
+
+.profile-container {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .profile-name {
+      color: $white;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    .profile-email {
+      color: $text-light;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.2;
+      margin: 0;
+    }
+  }
+
+  .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
   }
 }
 

@@ -4,12 +4,16 @@ import {
   ArrowUp,
   ArrowUpDown,
   Book,
+  Cog,
+  DollarSign,
   HomeIcon,
   LineChart,
   Sprout,
+  Ticket,
 } from "lucide-react";
 
 import "@/styles/main.scss";
+import Image from "next/image";
 
 export default function MainLayout({ children }: Children) {
   return (
@@ -19,30 +23,25 @@ export default function MainLayout({ children }: Children) {
           <div className="sidebar">
             <div className="sidebar-content">
               <div className="nav-links">
-              <SidebarButton
+                <SidebarButton
                   icon={<HomeIcon className="icon" />}
                   text="Home"
                   route="/"
                 />
                 <SidebarButton
-                  icon={<LineChart className="icon" />}
-                  text="Trade"
-                  route="/trade"
+                  icon={<Ticket className="icon" />}
+                  text="Tickets"
+                  route="/tickets"
                 />
                 <SidebarButton
-                  icon={<ArrowUpDown className="icon" />}
-                  text="Lend"
-                  route="/lend"
+                  icon={<DollarSign className="icon" />}
+                  text="Resell"
+                  route="/resell"
                 />
                 <SidebarButton
-                  icon={<ArrowUp className="icon" />}
-                  text="Borrow"
-                  route="/borrow"
-                />
-                <SidebarButton
-                  icon={<Sprout className="icon" />}
-                  text="Farm"
-                  route="/farm"
+                  icon={<Cog className="icon" />}
+                  text="Settings"
+                  route="/settings"
                 />
               </div>
 
@@ -50,14 +49,24 @@ export default function MainLayout({ children }: Children) {
                 <button className="connect-wallet">Connect Wallet</button>
                 <div className="external-links">
                   <div className="nav-item">
-                    <Book className="icon" />
-                    <p>Docs</p>
+                    <div className="profile-container">
+                      <Image
+                        className="avatar"
+                        src="/avatar.png"
+                        width={32}
+                        height={32}
+                        alt="avatar"
+                      />
+                      <div className="profile-info">
+                        <p className="profile-name">Bitwallet</p>
+                        <p className="profile-email">0xad8908098a0d8098a</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
           <div className="content">{children}</div>
         </div>
       </div>
