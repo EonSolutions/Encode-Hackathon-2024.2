@@ -1,0 +1,271 @@
+// Variables
+$bg-dark: #111a22;
+$bg-darker: #1a2632;
+$primary-blue: #1980e6;
+$border-color: #344d65;
+$text-light: #93adc8;
+$nav-bg: #243647;
+$nav-bg-hover: #2e4459;
+$white: #fff;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin button-base {
+  @include flex-center;
+  min-width: 84px;
+  max-width: 480px;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 0;
+  height: 32px;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+}
+
+// Global styles
+body {
+  margin: 0;
+  font-family: Inter, "Noto Sans", sans-serif;
+}
+
+.app {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  flex-direction: column;
+  background-color: $bg-dark;
+  overflow-x: hidden;
+}
+
+.layout-container {
+  display: flex;
+  height: 100%;
+  flex-grow: 1;
+
+  .main-content {
+    gap: 4px;
+    padding: 0 24px;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    padding: 20px;
+  }
+}
+
+// Sidebar styles
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+
+  .sidebar-content {
+    display: flex;
+    height: 100%;
+    min-height: 700px;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: $bg-dark;
+    padding: 16px;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    &.active {
+      background-color: $nav-bg;
+    }
+
+    .icon {
+      color: $white;
+    }
+
+    p {
+      color: $white;
+      font-size: 14px;
+      font-weight: 500;
+      margin: 0;
+    }
+
+    &:hover {
+      background-color: $nav-bg-hover;
+    }
+  }
+}
+
+.bottom-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .connect-wallet {
+    @include button-base;
+    background-color: $primary-blue;
+    color: $white;
+    font-weight: 700;
+    width: 100%;
+
+    &:hover {
+      background-color: darken($primary-blue, 10%);
+    }
+  }
+
+  .external-links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+// Main content styles
+.content {
+  display: flex;
+  flex-direction: column;
+  max-width: 960px;
+  flex: 1;
+
+  .header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px;
+
+    h1 {
+      color: $white;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.2;
+      min-width: 288px;
+      margin: 0;
+    }
+  }
+}
+
+// Tabs
+.tabs {
+  padding-bottom: 12px;
+
+  .tabs-inner {
+    display: flex;
+    border-bottom: 1px solid $border-color;
+    padding: 0 16px;
+    gap: 32px;
+  }
+
+  .tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 3px solid transparent;
+    color: $text-light;
+    padding: 16px 0 13px;
+    text-decoration: none;
+
+    &.active {
+      border-bottom-color: $primary-blue;
+      color: $white;
+    }
+
+    p {
+      font-size: 14px;
+      font-weight: 700;
+      margin: 0;
+    }
+  }
+}
+
+// Transactions section
+h2 {
+  color: $white;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  padding: 20px 16px 12px;
+  margin: 0;
+}
+
+.transactions {
+  padding: 12px 16px;
+
+  .table-container {
+    display: flex;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid $border-color;
+    background-color: $bg-dark;
+
+    table {
+      flex: 1;
+      border-collapse: collapse;
+
+      th {
+        background-color: $bg-darker;
+        padding: 12px 16px;
+        text-align: left;
+        color: $white;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      td {
+        height: 72px;
+        padding: 8px 16px;
+        color: $text-light;
+        font-size: 14px;
+        border-top: 1px solid $border-color;
+
+        &:last-child {
+          font-weight: 700;
+        }
+      }
+
+      .pair-button,
+      .type-button,
+      .status-button {
+        @include button-base;
+        background-color: $nav-bg;
+        color: $white;
+        width: 100%;
+      }
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: 960px) {
+  .layout-container .main-content {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-width: none;
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+}
