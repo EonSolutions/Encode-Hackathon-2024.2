@@ -1,8 +1,19 @@
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 
-type User = { walletId: string; } | null;
+type User = {
+  walletId: string;
+  login: (walletId: string) => void;
+  logout: () => void;
+};
 
-const UserContext = createContext<User>(null);
+const UserContext = createContext<User>({
+  walletId: "",
+  login: () => {},
+  logout: () => {},
+});
+
+const useUser = () => useContext(UserContext);
 
 export default UserContext;
+export { useUser };
 export type { User };

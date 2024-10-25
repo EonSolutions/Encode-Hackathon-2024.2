@@ -1,3 +1,4 @@
+import { UserProvider } from "@/components/provider/UserProvider";
 import { Children } from "@/lib/types";
 import type { Metadata } from "next";
 
@@ -9,7 +10,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Children) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <UserProvider>{children}</UserProvider>
+      </body>
     </html>
   );
 }
