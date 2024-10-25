@@ -25,3 +25,5 @@ const hashFunc = (encrypted: string) => {
     return createHash('sha256').update(encrypted).digest('hex')
 }
 
+
+
