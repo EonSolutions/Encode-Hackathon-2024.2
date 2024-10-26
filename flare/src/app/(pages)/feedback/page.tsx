@@ -1,57 +1,50 @@
 "use client";
 import React, { useState } from "react";
 import "./Feedback.css";
-import {
-  generateKeys,
-  encryptData,
-  decryptData,
-  hashFunc,
-} from "../../lib/encrypt"; // Import RSA functions
+import { hashFunc } from "../../lib/encrypt";
 import { getMethods } from "@/app/lib/flare/contract";
 import { useContract } from "@/app/lib/ctx/contractctx";
 
 export default function Feedback() {
-  const [feedback, setFeedback] = useState("");
-  
+  const [feedbackInput, setFeedbackInput] = useState("");
+  const [feedback, setFeedback] = useState<number[]>([]);
+
   const contract = useContract();
 
   const handleSubmit = async () => {
     try {
-      // Step 1: Generate RSA keys
-      const { publicKey, privateKey } = generateKeys();
-
-      // Step 2: Encrypt the feedback using the public key
-      const encryptedFeedback = encryptData(feedback, publicKey);
-      console.log("Encrypted Feedback:", encryptedFeedback);
-
-      // Step 3: Decrypt the feedback using the private key
-      const decryptedFeedback = decryptData(encryptedFeedback, privateKey);
-      console.log("Decrypted Feedback:", decryptedFeedback);
+      // Step 1-3: Encrypt feedback
+      const res0 = await fetch("http://localhost:5001/encrypt", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          value: feedback,
+        }),
+      });
+      let encryptedFeedback = (await res0.json()).encrypted_feedback;
 
       // Check if the encryption and decryption worked
       let docRef;
-      if (feedback === decryptedFeedback) {
-        console.log("Encryption and decryption successful!");
+      console.log("Encryption and decryption successful!");
 
-        // Step 4: Save encrypted feedback to Firebase
-        const res = await fetch("/api/db/put", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            encryptedFeedback: encryptedFeedback,
-          }),
-        });
-        const body = await res.json();
-        docRef = body.id;
-        console.log("Document written with ID: ", docRef);
-      } else {
-        console.log("Something went wrong with encryption or decryption.");
-      }
+      // Step 4: Save encrypted feedback to Firebase
+      const res1 = await fetch("/api/db/put", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          encryptedFeedback: encryptedFeedback,
+        }),
+      });
+      const body = await res1.json();
+      docRef = body.id;
+      console.log("Document written with ID: ", docRef);
 
       // Step 5: Prepare attestation request
-      const res = await fetch("api/attest", {
+      const res2 = await fetch("api/attest", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -60,17 +53,23 @@ export default function Feedback() {
           data_id: docRef,
           data_hash: hashFunc(encryptedFeedback),
           model: "feedback",
-          abi_signature: JSON.stringify({ signature: "abc" }),
+          abi_signature: JSON.stringify({
+            DataEntry: {
+              encrypted_result: "string",
+              encrypted_data: "string",
+            },
+          }),
         }),
       });
 
-      const data = await res.json();
+      const data = await res2.json();
 
-      console.log("STATUS ! STATUS ! ", res.status);
+      console.log("STATUS ! STATUS ! ", res2.status);
       console.log(data);
 
       // Reset feedback input
-      setFeedback("");
+      setFeedback([]);
+      setFeedbackInput("");
     } catch (error) {
       console.error("Error submitting feedback: ", error);
     }
@@ -79,9 +78,13 @@ export default function Feedback() {
   return (
     <div className="feedback-container">
       <h2>We Value Your Feedback</h2>
-      <button onClick={async () => {
-        console.log(await getMethods(contract));
-      }}>Balls</button>
+      <button
+        onClick={async () => {
+          console.log(await getMethods(contract));
+        }}
+      >
+        Balls
+      </button>
       <p>
         Your input is valuable in helping us better understand your needs and
         tailor our service accordingly.
@@ -89,8 +92,11 @@ export default function Feedback() {
       <textarea
         className="feedback-input"
         placeholder="Write your feedback here..."
-        value={feedback}
-        onChange={(e) => setFeedback(e.target.value)}
+        value={feedbackInput}
+        onChange={(e) => {
+          setFeedback(e.target.value.split(",").map(Number));
+          setFeedbackInput(e.target.value);
+        }}
       />
       <button className="submit-btn" onClick={handleSubmit}>
         Submit Feedback

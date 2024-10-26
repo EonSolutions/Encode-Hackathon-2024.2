@@ -5,22 +5,21 @@ import base64
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+from concrete.fhe import Value
 
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-db = firestore.client()
-
 cred = credentials.Certificate("flareapp-81251-firebase-adminsdk-v5tkg-a114986bb0.json")
 firebase_admin.initialize_app(cred)
 
+db = firestore.client()
+
 labels = [
-    "Fashion",
-    "Electronics",
-    "Food",
-    "Home",
+    "Stressed",
+    "Not Stresed"
 ]
 
 FHE_DIRECTORY = 'tmp/'
@@ -38,13 +37,14 @@ server.load()
 def fhe():
     try:
         doc_ref = db.collection('feedbacks').document(request.json['id'])
-        encrypted_data = doc_ref.get().to_dict()
+        encrypted_data = doc_ref.get().to_dict()["encryptedFeedback"]
 
-        print(encrypted_data)
-        encrypted_data = base64.b64decode(encrypted_data)
-        encrypted_result = server.run(encrypted_data, serialized_evaluation_keys)
-        results = encrypted_result
-        return jsonify({'encrypted_result': base64.b64encode(results).decode('ascii')}), 200
+        encrypted_result = server.run(base64.b64decode(encrypted_data), serialized_evaluation_keys)
+        print(base64.b64encode(encrypted_result).decode('ascii'))
+        return jsonify({
+                'encrypted_data': encrypted_data,
+                'encrypted_result': base64.b64encode(encrypted_result).decode('ascii')
+            }), 200
     except Exception as e:
         print(e)
         return jsonify({'error': str(e)}), 400

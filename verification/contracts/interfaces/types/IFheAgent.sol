@@ -6,7 +6,7 @@ pragma solidity >=0.7.6 <0.9;
 ///////////////////////////////////////////////////////////////////
 
 /**
- * @custom:name FheAgent
+ * @custom:name IFheAgent
  * @custom:supported WEB2
  * @author Cy4
  * @notice FheAgent attestation type
