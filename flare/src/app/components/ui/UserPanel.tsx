@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "@/lib/ctx/userctx";
+import { useUser } from "@/app/lib/ctx/userctx";
 
 export default function UserPanel() {
   const { walletId, login, logout } = useUser();

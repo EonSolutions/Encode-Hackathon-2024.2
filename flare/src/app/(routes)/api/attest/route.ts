@@ -1,4 +1,4 @@
-import { prepareAttestationRequest } from "@/lib/attestation";
+import { prepareAttestationRequest } from "@/app/lib/flare/attestation";
 
 export async function POST(req: Request) {
   const body = await req.json();

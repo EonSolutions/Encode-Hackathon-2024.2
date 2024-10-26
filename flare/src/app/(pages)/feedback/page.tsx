@@ -6,11 +6,14 @@ import {
   encryptData,
   decryptData,
   hashFunc,
-} from "../../../lib/encrypt"; // Import RSA functions
-import { prepareAttestationRequest } from "@/lib/attestation";
+} from "../../lib/encrypt"; // Import RSA functions
+import { getMethods } from "@/app/lib/flare/contract";
+import { useContract } from "@/app/lib/ctx/contractctx";
 
 export default function Feedback() {
   const [feedback, setFeedback] = useState("");
+  
+  const contract = useContract();
 
   const handleSubmit = async () => {
     try {
@@ -76,6 +79,9 @@ export default function Feedback() {
   return (
     <div className="feedback-container">
       <h2>We Value Your Feedback</h2>
+      <button onClick={async () => {
+        console.log(await getMethods(contract));
+      }}>Balls</button>
       <p>
         Your input is valuable in helping us better understand your needs and
         tailor our service accordingly.
