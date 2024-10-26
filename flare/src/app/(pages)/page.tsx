@@ -1,9 +1,11 @@
 "use client";
 import { useUser } from "@/app/lib/ctx/userctx";
 import styles from "./landing.module.scss";
+import { useRouter } from "next/navigation";
 
 export default function LandingPage() {
     const { walletId, login, logout } = useUser();
+    const router = useRouter();
     const loggedIn = walletId !== "";
 
     return (
@@ -14,8 +16,8 @@ export default function LandingPage() {
                 </div>
                 <div className={styles.navLinks}>
                     <a href="/">Home</a>
-                    <a href="/dashboard">Dashboard</a>
-                    <a href="/about">About</a>
+                    <a href="/">Dashboard</a>
+                    <a href="/">About</a>
                 </div>
             </nav>
 
@@ -35,6 +37,7 @@ export default function LandingPage() {
                                 });
                                 if (res.length > 0) {
                                     login(res[0]);
+                                    router.push("/dashboard");
                                 }
                             }
                         }}

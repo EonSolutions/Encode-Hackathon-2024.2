@@ -20,7 +20,7 @@ async function prepareAttestationRequest(
   requestBody: any,
 ): Promise<AttestationRequest> {
   const response = await fetch(
-    `${ATTESTATION_URL}/${attestationType}/prepareRequest`,
+    `${ATTESTATION_URL}/${attestationType}/prepareResponse`,
     {
       method: "POST",
       headers: {
@@ -30,6 +30,7 @@ async function prepareAttestationRequest(
       body: JSON.stringify({
         attestationType: toHex(attestationType),
         sourceId: toHex(sourceId),
+        messageIntegrityCode: "0x0000000000000000000000000000000000000000000000000000000000000000",
         requestBody: requestBody,
       }),
     },

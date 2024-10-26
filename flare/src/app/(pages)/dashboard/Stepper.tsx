@@ -1,7 +1,16 @@
 import React from "react";
 import styles from "./stepper.module.scss";
 
-const Stepper = ({ steps = [], activeStep }) => (
+type StepperProps = {
+    steps: {
+        label: string;
+        inProgressDescription: string;
+        completedDescription: string;
+    }[];
+    activeStep: number;
+}
+
+const Stepper = ({ steps = [], activeStep }: StepperProps) => (
     <div className={styles.stepper}>
         <h2>Processing Data</h2>
         <div className={styles.stepsList}>
