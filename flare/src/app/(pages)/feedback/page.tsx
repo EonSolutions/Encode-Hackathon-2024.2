@@ -1,9 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import "./Feedback.css";
-import { generateKeys, encryptData, decryptData } from "../../../lib/encrypt"; // Import RSA functions
+import { generateKeys, encryptData, decryptData, hashFunc } from "../../../lib/encrypt"; // Import RSA functions
 import { db } from "../../../lib/firebaseConfig"; // Firebase config
-import { collection, addDoc } from "firebase/firestore"; // Firebase Firestore functions
+import { collection, addDoc, doc } from "firebase/firestore"; // Firebase Firestore functions
+import { prepareAttestationRequest } from "@/lib/attestation";
 
 export default function Feedback() {
     const [feedback, setFeedback] = useState("");
@@ -42,6 +43,18 @@ export default function Feedback() {
             } else {
                 console.log("Something went wrong with encryption or decryption.");
             }
+            // Step 5: Calculate the hash
+            const hash = hashFunc(encryptedFeedback);
+
+            // Step 6: Put the hash and data ID on chain
+            const res = await prepareAttestationRequest("IFheAgent", "feedback", {
+                data_id: docid,
+                data_hash: hash,
+                model: "feedback",
+                abi_signature: "feedback",
+            });
+
+            console.log(res);
 
             // Reset feedback input
             setFeedback("");

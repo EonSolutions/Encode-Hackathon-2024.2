@@ -22,6 +22,6 @@ export const decryptData = (data: string, privKey: string) => {
     return forge.util.decodeUtf8(decrypted);
 };
 
-const hashFunc = (encrypted: string) => {
+export const hashFunc = (encrypted: string) => {
     return createHash('sha256').update(encrypted).digest('hex')
 }
