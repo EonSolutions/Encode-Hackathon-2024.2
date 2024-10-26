@@ -43,12 +43,15 @@ export class IFheAgentVerifierService extends BaseVerifierService<
     const model = fixedRequest.requestBody.model;
     const abiSign = JSON.parse(fixedRequest.requestBody.abi_signature);
 
-    const url = `https://localhost:7283/fhe?id=${data_id}&hash=${data_hash}&model=${model}`;
     const result = new AttestationResponse<IFheAgent_Response>();
 
     let responseData: FHEResponse;
     await axios
-      .get(url)
+      .post("https://localhost:5002/fhe", {
+        id: data_id,
+        hash: data_hash,
+        model: model,
+      })
       .then((response) => {
         responseData = response['data'] as FHEResponse;
       })

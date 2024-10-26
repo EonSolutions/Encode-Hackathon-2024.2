@@ -1,5 +1,3 @@
-import pandas as pd
-import numpy as np
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 from concrete.ml.deployment import FHEModelClient, FHEModelServer
@@ -27,19 +25,13 @@ serialized_evaluation_keys = client.get_serialized_evaluation_keys()
 server = FHEModelServer(path_dir=FHE_DIRECTORY)
 server.load()
 
-@app.route('/predict', methods=['POST'])
+@app.route('/fhe', methods=['POST'])
 @cross_origin()
-def predict():
+def fhe():
     try:
-        # Get the encrypted data from the request
         encrypted_data = request.json['value']
-        # Convert from string to bytes
-        # print(encrypted_data)
         encrypted_data = base64.b64decode(encrypted_data)
-        # print(encrypted_data)
-        # Server processes the encrypted data
         encrypted_result = server.run(encrypted_data, serialized_evaluation_keys)
-        # Return the prediction as a JSON response
         results = encrypted_result
         return jsonify({'encrypted_result': base64.b64encode(results).decode('ascii')}), 200
     except Exception as e:
