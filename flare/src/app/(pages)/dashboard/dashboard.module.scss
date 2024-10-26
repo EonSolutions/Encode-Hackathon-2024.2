@@ -1,0 +1,226 @@
+// Variables specific to dashboard theme
+$bg-light: #f7f7f9;
+$bg-dark: #1a2632;
+$card-bg: #ffffff;
+$text-dark: #333;
+$banner-bg: #324a5f;
+$primary-color: #1980e6;
+$banner-button-bg: #ff5722;
+$banner-button-hover: #ff784e;
+$shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+$step-bg: #f1f3f5;
+$completed-color: #4CAF50;
+$in-progress-color: #1980e6; // Blue for active step
+$pending-color: #b0bec5;
+
+// Dashboard container and main content
+.dashboardContainer {
+  display: flex;
+  height: 100vh;
+  background-color: $bg-light;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: $bg-dark;
+  color: $card-bg;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarTitle {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: $card-bg;
+  margin-bottom: 20px;
+}
+
+.navLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.navItem {
+  color: $card-bg;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: lighten($bg-dark, 5%);
+  }
+}
+
+.mainContent {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+.headerBanner {
+  background-color: $banner-bg;
+  color: $card-bg;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  box-shadow: $shadow;
+
+  h2 {
+    margin: 0;
+    font-size: 1.4em;
+  }
+
+  p {
+    font-size: 0.9em;
+  }
+}
+
+.bannerButton {
+  background-color: $banner-button-bg;
+  color: $card-bg;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $banner-button-hover;
+  }
+}
+
+// Summary Cards styling
+.summaryCards {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.summaryCard {
+  background-color: $card-bg;
+  padding: 20px;
+  border-radius: 10px;
+  flex: 1;
+  text-align: center;
+  box-shadow: $shadow;
+
+  h3 {
+    font-size: 1em;
+    color: $text-dark;
+    margin-bottom: 8px;
+  }
+
+  p {
+    font-size: 1.6em;
+    color: $primary-color;
+    font-weight: bold;
+  }
+}
+
+// Stepper Component Styling
+.stepper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: $bg-light;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.stepContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  width: 100%;
+}
+
+.line {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  right: 50%;
+  height: 4px;
+  background-color: $pending-color;
+  z-index: 1;
+  transform: translateX(-50%);
+  transition: background-color 0.3s ease;
+}
+
+.lineActive {
+  background-color: $completed-color;
+}
+
+.stepIndicator {
+  width: 40px;
+  height: 40px;
+  background-color: $pending-color;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+  // Completed Step Indicator
+  &.completed {
+    background-color: $completed-color;
+  }
+
+  // Active Step Indicator with blue glow effect
+  &.active {
+    background-color: $in-progress-color;
+    box-shadow: 0 0 10px 5px rgba(25, 128, 230, 0.4);
+    animation: pulseGlow 1.5s infinite;
+  }
+}
+
+// Pulse animation for active step
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px 5px rgba(25, 128, 230, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px 10px rgba(25, 128, 230, 0.6);
+  }
+}
+
+.stepContent {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.stepTitle {
+  font-size: 0.7rem; // Smaller font size
+  opacity: 0.6; // Lower opacity
+  font-weight: bold;
+  color: $text-dark;
+  margin: 5px 0 0 0;
+}
+
+.stepDescription {
+  font-size: 0.9rem; // Slightly larger font than stepTitle for emphasis
+  margin-top: 2px;
+  color: $pending-color;
+
+  // Completed and Active status color change
+  &.completed {
+    color: $completed-color;
+    font-weight: bold;
+  }
+  &.inProgress {
+    color: $in-progress-color;
+    font-weight: bold;
+  }
+  &.pending {
+    color: $pending-color;
+  }
+}
