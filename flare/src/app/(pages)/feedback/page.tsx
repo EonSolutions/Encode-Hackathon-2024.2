@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import "./Feedback.css";
-import { generateKeys, encryptData, decryptData } from "../../../../backend/encrypt"; // Import RSA functions
-import { db } from "../../../../backend/firebaseConfig"; // Firebase config
+import { generateKeys, encryptData, decryptData } from "../../../lib/encrypt"; // Import RSA functions
+import { db } from "../../../lib/firebaseConfig"; // Firebase config
 import { collection, addDoc } from "firebase/firestore"; // Firebase Firestore functions
 
 export default function Feedback() {
