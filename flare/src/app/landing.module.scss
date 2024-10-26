@@ -1,0 +1,123 @@
+// Main container with no padding and non-scrollable
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100vh;
+  overflow: hidden; // Prevent scrolling
+  background-color: #f8f9fc;
+  font-family: Arial, sans-serif;
+}
+
+body{
+  margin: 0;
+}
+
+// Navbar styling
+.navbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: #f3f4f6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .logo a {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4a56e2;
+  text-decoration: none;
+}
+
+.navbar .navLinks a {
+  margin: 0 1rem;
+  font-size: 1rem;
+  color: #333;
+  text-decoration: none;
+}
+
+.navbar .navLinks a:hover {
+  color: #4a56e2;
+}
+
+// Responsive Banner Section
+.banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  width: 100%;
+  text-align: center;
+}
+
+.textContent {
+  padding: 0; // No padding
+}
+
+.textContent h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.textContent p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.connectWallet {
+  background-color: #4a56e2;
+  color: #fff;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 1rem;
+  box-shadow: 0px 4px 8px rgba(74, 86, 226, 0.3);
+}
+
+.connectWallet:hover {
+  background-color: #3c47c6;
+}
+
+.connectionStatus {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
+}
+
+.walletId {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 5px;
+}
+
+// Illustration Section
+.illustration {
+  margin-top: 1rem;
+}
+
+.illustration img {
+  max-width: 100%;
+  height: auto;
+}
+
+// Footer styling
+.footer {
+  width: 100%;
+  text-align: center;
+  padding: 0.5rem 0; // Minimal padding for better alignment
+  font-size: 0.85rem;
+  color: #999;
+}

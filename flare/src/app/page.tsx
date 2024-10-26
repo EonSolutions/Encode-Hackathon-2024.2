@@ -1,58 +1,59 @@
 "use client";
-import React from "react";
 import { useUser } from "@/app/lib/ctx/userctx";
-import UserPanel from "../app/components/ui/UserPanel";
-import { useRouter } from "next/navigation";
+import styles from "./landing.module.scss";
 
 export default function LandingPage() {
-    const { walletId } = useUser();
-    const router = useRouter();
-
-    // Redirect to dashboard if already connected
-    React.useEffect(() => {
-        if (walletId) {
-            router.push("/dashboard");
-        }
-    }, [walletId, router]);
+    const { walletId, login, logout } = useUser();
+    const loggedIn = walletId !== "";
 
     return (
-        <div className="landing-page">
-            <h1>Welcome to Healthcare Dashboard</h1>
-            <p>Please connect your wallet to continue.</p>
-            <UserPanel />
+        <div className={styles.pageContainer}>
+            <nav className={styles.navbar}>
+                <div className={styles.logo}>
+                    <a href="/">HealthDash</a>
+                </div>
+                <div className={styles.navLinks}>
+                    <a href="/">Home</a>
+                    <a href="/dashboard">Dashboard</a>
+                    <a href="/about">About</a>
+                </div>
+            </nav>
 
-            <style jsx>{`
-        .landing-page {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          height: 100vh;
-          background: #f3f4f6;
-          text-align: center;
-        }
-        h1 {
-          font-size: 2.5rem;
-          color: #333;
-        }
-        p {
-          color: #555;
-          font-size: 1.25rem;
-        }
-        .connect-wallet {
-          margin-top: 20px;
-          padding: 10px 20px;
-          background-color: #0070f3;
-          color: white;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-          font-size: 1rem;
-        }
-        .connect-wallet:hover {
-          background-color: #005bb5;
-        }
-      `}</style>
+            <section className={styles.banner}>
+                <div className={styles.textContent}>
+                    <h1>Smart Health Tracking Made Easy!</h1>
+                    <p>Connect your wallet to get started with secure and seamless health tracking.</p>
+                    <button
+                        className={styles.connectWallet}
+                        onClick={async () => {
+                            if (loggedIn) {
+                                logout();
+                                return;
+                            } else {
+                                const res = await window.ethereum.request({
+                                    method: "eth_requestAccounts",
+                                });
+                                if (res.length > 0) {
+                                    login(res[0]);
+                                }
+                            }
+                        }}
+                    >
+                        {loggedIn ? "Disconnect Wallet" : "Connect Wallet"}
+                    </button>
+                    <p className={styles.connectionStatus}>
+                        {loggedIn ? "Connected" : "Not Connected"}
+                    </p>
+                    {walletId && <p className={styles.walletId}>{walletId}</p>}
+                </div>
+                <div className={styles.illustration}>
+                    <img src="/images/health-illustration.svg" alt="Health Tracking" />
+                </div>
+            </section>
+
+            <footer className={styles.footer}>
+                <p>&copy; 2024 HealthDash. All rights reserved.</p>
+            </footer>
         </div>
     );
 }
