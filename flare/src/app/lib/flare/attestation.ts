@@ -28,7 +28,7 @@ async function prepareAttestationRequest(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        attestationType: toHex(attestationType.substring(1)),
+        attestationType: toHex(attestationType),
         sourceId: toHex(sourceId),
         requestBody: requestBody,
       }),

@@ -6,21 +6,16 @@ import os
 from concrete.ml.sklearn.xgb import XGBClassifier
 from concrete.ml.deployment import FHEModelDev
 
-df = pd.read_csv("products.csv")
-df["Label"] = df["Label"].apply(hash)
-df["category"] = df["category"].apply(int)
-df["Label"] = (df["Label"] - df["Label"].min()) / (df["Label"].max() - df["Label"].min())
+df = pd.read_csv("health_data.csv")
 
 labels = [
-    "Fashion",
-    "Electronics",
-    "Food",
-    "Home",
+    "Stressed",
+    "Not Stressed",
 ]
 
 FHE_DIRECTORY = 'tmp/'
 
-y_col = "category"
+y_col = "label"
 
 X = df.drop(y_col, axis=1)
 y = df[y_col]

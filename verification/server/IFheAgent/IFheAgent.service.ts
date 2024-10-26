@@ -18,17 +18,17 @@ import { createHash } from 'crypto';
 type FHEResponse = {
   encrypted_data: string;
   encrypted_result: string;
-}
+};
 
 @Injectable()
 export class IFheAgentVerifierService extends BaseVerifierService<
   IFheAgent_Request,
   IFheAgent_Response
 > {
-    constructor(protected configService: ConfigService<IConfig>) {
+  constructor(protected configService: ConfigService<IConfig>) {
     const config: IVerificationServiceConfig = {
-      source: 'WEB2', //CONFIGURE THIS
-      attestationName: "FheAgent",
+      source: 'WEB2',
+      attestationName: 'IFheAgent',
     };
     super(configService, config);
   }
@@ -51,7 +51,7 @@ export class IFheAgentVerifierService extends BaseVerifierService<
 
     let responseData: FHEResponse;
     await axios
-      .post("http://localhost:5002/fhe", {
+      .post('http://localhost:5002/fhe', {
         id: b64id,
         hash: b64hash,
         model: b64model,
@@ -60,7 +60,7 @@ export class IFheAgentVerifierService extends BaseVerifierService<
         responseData = response['data'] as FHEResponse;
       })
       .catch((error) => {
-        console.error(error);
+        // console.error(error);
         result.status = AttestationResponseStatus.INVALID;
         return result;
       });
@@ -73,8 +73,9 @@ export class IFheAgentVerifierService extends BaseVerifierService<
 
     const web3 = new Web3();
     const responseBody = new IFheAgent_ResponseBody({
-      abi_encoded_data: web3.eth.abi.encodeParameter(abiSign, responseData.encrypted_result),
+      abi_encoded_data: web3.eth.abi.encodeParameter(abiSign, responseData),
     });
+
     const attResponse = new IFheAgent_Response({
       attestationType: fixedRequest.attestationType,
       sourceId: fixedRequest.sourceId,
