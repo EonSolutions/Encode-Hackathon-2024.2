@@ -7,6 +7,9 @@ $text-light: #93adc8;
 $nav-bg: #243647;
 $nav-bg-hover: #2e4459;
 $white: #fff;
+$bg-light: #f7f7f9;
+$bg-dark: #1a2632;
+$padding: 24px;
 
 // Mixins
 @mixin flex-center {
@@ -59,6 +62,22 @@ body {
     justify-content: center;
     padding: 20px;
   }
+}
+
+.dashboard-container {
+  display: flex;
+  height: 100vh;      // Full viewport height
+  background-color: $bg-light;
+}
+
+// Main Content Area within Dashboard Container
+.dashboard-main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  box-sizing: border-box; // Ensures padding doesn’t affect width
 }
 
 // Sidebar styles
