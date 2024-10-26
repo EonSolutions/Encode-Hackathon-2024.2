@@ -1,0 +1,42 @@
+  protected async verifyRequest(
+    fixedRequest: IFheAgent_Request,
+  ): Promise<AttestationResponse<IFheAgent_Response>> {
+    const axios = require('axios');
+
+    const data = fixedRequest.requestBody.data;
+    const model = fixedRequest.requestBody.model;
+    const abiSign = JSON.parse(fixedRequest.requestBody.abi_signature);
+
+    const url = `https://localhost:7283/fhe?data=${data}&model=${model}`;
+    const result = new AttestationResponse<IFheAgent_Response>();
+
+    let responseData;
+    await axios
+      .get(url)
+      .then((response) => {
+        responseData = response['data'];
+        console.log(responseData);
+      })
+      .catch((error) => {
+        console.error(error);
+        result.status = AttestationResponseStatus.INVALID;
+        return result;
+      });
+
+    const web3 = new Web3();
+    const responseBody = new IFheAgent_ResponseBody({
+      abi_encoded_data: web3.eth.abi.encodeParameter(abiSign, responseData),
+    });
+    const attResponse = new IFheAgent_Response({
+      attestationType: fixedRequest.attestationType,
+      sourceId: fixedRequest.sourceId,
+      votingRound: '0',
+      lowestUsedTimestamp: '0xffffffffffffffff',
+      requestBody: fixedRequest.requestBody,
+      responseBody: responseBody,
+    });
+
+    result.response = attResponse;
+    result.status = AttestationResponseStatus.VALID;
+    return result;
+  }
