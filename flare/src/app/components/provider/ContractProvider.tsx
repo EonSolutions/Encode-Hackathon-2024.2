@@ -18,12 +18,14 @@ export const ContractProvider = ({ children }: Children) => {
     (async () => {
       const params = `?module=contract&action=getabi&address=${CONTRACT_ADDR}`;
       const response = await fetch(BASE_URL + params);
-      const abi = JSON.parse((await response.json())["result"]);
+      // const abi = JSON.parse((await response.json())["result"]);
 
-      const w3 = new Web3(RPC_URL);
-      const contract = new w3.eth.Contract(abi, CONTRACT_ADDR);
-      console.log(contract);
-      setContract(contract);
+      console.log(await response.json());
+
+      // const w3 = new Web3(RPC_URL);
+      // const contract = new w3.eth.Contract(abi, CONTRACT_ADDR);
+      // console.log(contract);
+      // setContract(contract);
     })();
   }, []);
 
