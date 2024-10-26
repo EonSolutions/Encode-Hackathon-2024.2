@@ -43,18 +43,6 @@ export default function Feedback() {
             } else {
                 console.log("Something went wrong with encryption or decryption.");
             }
-            // Step 5: Calculate the hash
-            const hash = hashFunc(encryptedFeedback);
-
-            // Step 6: Put the hash and data ID on chain
-            const res = await prepareAttestationRequest("IFheAgent", "feedback", {
-                data_id: docid,
-                data_hash: hash,
-                model: "feedback",
-                abi_signature: "feedback",
-            });
-
-            console.log(res);
 
             // Reset feedback input
             setFeedback("");
