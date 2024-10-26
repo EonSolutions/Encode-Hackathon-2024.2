@@ -1,4 +1,5 @@
 const ATTESTATION_URL = "http://localhost:8000"
+const ATTESTATION_API_KEY = "";
 
 function toHex(data: string): string {
   var result = "";
@@ -23,7 +24,7 @@ async function prepareAttestationRequest(
     {
       method: "POST",
       headers: {
-        // "X-API-KEY": ATTESTATION_API_KEY as string,
+        "X-API-KEY": ATTESTATION_API_KEY as string,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -33,6 +34,7 @@ async function prepareAttestationRequest(
       }),
     },
   );
+  console.log("EEEEEEEEEE", response.status);
   const data = await response.json();
   return data;
 }
