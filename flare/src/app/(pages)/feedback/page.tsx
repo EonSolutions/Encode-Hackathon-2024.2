@@ -2,14 +2,16 @@
 import React, { useState } from "react";
 import "./Feedback.css";
 import { hashFunc } from "../../lib/encrypt";
-import { getMethods } from "@/app/lib/flare/contract";
 import { useContract } from "@/app/lib/ctx/contractctx";
+import { transact } from "@/app/lib/flare/contract";
+import { useUser } from "@/app/lib/ctx/userctx";
 
 export default function Feedback() {
   const [feedbackInput, setFeedbackInput] = useState("");
   const [feedback, setFeedback] = useState<number[]>([]);
 
   const contract = useContract();
+  const { walletId } = useUser();
 
   const handleSubmit = async () => {
     try {
@@ -80,7 +82,7 @@ export default function Feedback() {
       <h2>We Value Your Feedback</h2>
       <button
         onClick={async () => {
-          console.log(await getMethods(contract));
+          console.log(await transact(contract, walletId, "createDataEntry", [123, "0x" + hashFunc("balls")]));
         }}
       >
         Balls
