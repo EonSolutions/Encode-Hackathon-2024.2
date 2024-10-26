@@ -26,11 +26,19 @@ export default function Feedback() {
                 console.log("Encryption and decryption successful!");
 
                 // Step 4: Save encrypted feedback to Firebase
-                const docRef = await addDoc(collection(db, "feedbacks"), {
-                    encryptedFeedback: encryptedFeedback,
-                    timestamp: new Date(),
-                });
-                console.log("Document written with ID: ", docRef.id);
+                const res = await fetch("/api/db/put",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            encryptedFeedback: encryptedFeedback
+                        })
+                    });
+                const body = await res.json();
+                const docRef = body.id;
+                console.log("Document written with ID: ", docRef);
             } else {
                 console.log("Something went wrong with encryption or decryption.");
             }
