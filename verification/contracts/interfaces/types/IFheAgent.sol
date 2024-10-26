@@ -58,12 +58,14 @@ interface IFheAgent {
 
     /**
      * @notice Request body for FheAgent attestation type
-     * @param data Data to run the model on
+     * @param data_id Data id to fetch the data from
+     * @param data_hash Hash of the data
      * @param model Model to run on the data
      * @param abi_signature ABI signature of the data
      **/
     struct RequestBody {
-        string data;
+        string data_id;
+        string data_hash;
         string model;
         string abi_signature;
     }
