@@ -7,8 +7,10 @@ import os
 from concrete.ml.sklearn.xgb import XGBClassifier
 from concrete.ml.deployment import FHEModelDev, FHEModelClient, FHEModelServer
 
-df = pd.read_csv("test_data.csv")
+df = pd.read_csv("products.csv")
 df["Label"] = df["Label"].apply(hash)
+df["category"] = df["category"].apply(int)
+df["Label"] = (df["Label"] - df["Label"].min()) / (df["Label"].max() - df["Label"].min())
 
 labels = [
     "Fashion",
@@ -19,10 +21,10 @@ labels = [
 
 FHE_DIRECTORY = 'tmp/'
 
-y_col = "Label"
+y_col = "category"
 
 X = df.drop(y_col, axis=1)
-y = df[y_col] - 1
+y = df[y_col]
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
