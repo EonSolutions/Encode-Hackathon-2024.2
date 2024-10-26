@@ -8,6 +8,7 @@ from concrete.ml.sklearn.xgb import XGBClassifier
 from concrete.ml.deployment import FHEModelDev, FHEModelClient, FHEModelServer
 
 df = pd.read_csv("test_data.csv")
+df["Label"] = df["Label"].apply(hash)
 
 labels = [
     "Fashion",
