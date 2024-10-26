@@ -2,11 +2,19 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 from concrete.ml.deployment import FHEModelClient, FHEModelServer
 import base64
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
 
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+
+db = firestore.client()
+
+cred = credentials.Certificate("flareapp-81251-firebase-adminsdk-v5tkg-a114986bb0.json")
+firebase_admin.initialize_app(cred)
 
 labels = [
     "Fashion",
@@ -29,7 +37,10 @@ server.load()
 @cross_origin()
 def fhe():
     try:
-        encrypted_data = request.json['value']
+        doc_ref = db.collection('feedbacks').document(request.json['id'])
+        encrypted_data = doc_ref.get().to_dict()
+
+        print(encrypted_data)
         encrypted_data = base64.b64decode(encrypted_data)
         encrypted_result = server.run(encrypted_data, serialized_evaluation_keys)
         results = encrypted_result
