@@ -4,6 +4,7 @@ import styles from "./dashboard.module.scss";
 import LineChart from "./LineChart";
 import { RadialBarChart, RadialBar, Legend } from "recharts";
 import Popup from "./Popup";
+import Stepper from "./Stepper";
 
 // Sidebar Component
 const Sidebar = () => (
@@ -29,20 +30,15 @@ const Card = ({ title, data, trendData, children }) => (
     </div>
 );
 
-// Stress Gauge Component, rendered only on the client side
+// Stress Gauge Component
 const StressGauge = ({ stressLevel }) => {
-    // Set state to check if component has mounted
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
-        // Set the client flag to true on component mount
         setIsClient(true);
     }, []);
 
-    if (!isClient) {
-        // Render nothing on the server side
-        return null;
-    }
+    if (!isClient) return null;
 
     const data = [
         { name: "Stress Level", value: stressLevel, fill: stressLevel > 50 ? "#ff4d4f" : "#52c41a" }
@@ -69,36 +65,68 @@ const StressGauge = ({ stressLevel }) => {
 
 // Main DashboardPage Component
 const DashboardPage = () => {
-    const [healthData, setHealthData] = useState({
-        heartRate: { average: 72, trend: [70, 72, 74, 73, 71, 72, 73, 74, 76, 72, 73, 75] },
-        bloodPressure: {
-            systolic: 120,
-            diastolic: 80,
-            trend: [
-                { day: "Mon", systolic: 118, diastolic: 78 },
-                { day: "Tue", systolic: 121, diastolic: 79 },
-                { day: "Wed", systolic: 119, diastolic: 77 },
-                { day: "Thu", systolic: 123, diastolic: 80 },
-                { day: "Fri", systolic: 117, diastolic: 76 }
-            ]
-        },
-        sleep: { averageHours: 7.5, trend: [7, 8, 7.5, 6, 8, 7, 7.5] }
-    });
-    const [showPopup, setShowPopup] = useState(true);
+    const [healthData, setHealthData] = useState(null);
+    const [showPopup, setShowPopup] = useState(true); // Show JSON upload popup initially
+    const [showStepper, setShowStepper] = useState(false); // Control Stepper visibility
+    const [activeStep, setActiveStep] = useState(0);
 
     const handleFileUpload = (data) => {
         setHealthData(data);
-        setShowPopup(false);
+        setShowPopup(false); // Close the JSON upload popup
+        setShowStepper(true); // Show stepper after JSON upload
+        setActiveStep(0);
     };
 
-    const { heartRate, bloodPressure, sleep } = healthData;
+    // Simulated steps data
+    const stepsData = [
+        {
+            label: "Step 1",
+            inProgressDescription: "Initializing Chain",
+            completedDescription: "Chain Initialized"
+        },
+        {
+            label: "Step 2",
+            inProgressDescription: "Validating Transaction",
+            completedDescription: "Transaction Validated"
+        },
+        {
+            label: "Step 3",
+            inProgressDescription: "Reaching Consensus",
+            completedDescription: "Consensus Reached"
+        },
+        {
+            label: "Step 4",
+            inProgressDescription: "Adding Block to Chain",
+            completedDescription: "Block Added to Chain"
+        },
+        {
+            label: "Step 5",
+            inProgressDescription: "Confirming Transaction",
+            completedDescription: "Transaction Confirmed"
+        }
+    ];
 
-    const heartRateTrendData = {
-        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"],
+    // Handle auto-advancing steps
+    useEffect(() => {
+        if (showStepper && activeStep < stepsData.length - 1) {
+            const interval = setInterval(() => {
+                setActiveStep((prev) => prev + 1);
+            }, 1000); // Adjust time interval as needed
+            return () => clearInterval(interval);
+        } else if (activeStep === stepsData.length - 1) {
+            // Hide stepper and display data after the last step
+            setTimeout(() => setShowStepper(false), 1000);
+        }
+    }, [showStepper, activeStep]);
+
+    const { heartRate, bloodPressure, sleep } = healthData || {};
+
+    const heartRateTrendData = heartRate && {
+        labels: Array.from({ length: heartRate.trend.length }, (_, i) => ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][i % 7]),
         datasets: [{ label: "Heart Rate (bpm)", data: heartRate.trend, borderColor: "rgba(75, 192, 192, 1)", backgroundColor: "rgba(75, 192, 192, 0.2)", fill: true }]
     };
 
-    const bloodPressureTrendData = {
+    const bloodPressureTrendData = bloodPressure && {
         labels: bloodPressure.trend.map((day) => day.day),
         datasets: [
             { label: "Systolic", data: bloodPressure.trend.map((day) => day.systolic), borderColor: "rgba(255, 99, 132, 1)", backgroundColor: "rgba(255, 99, 132, 0.2)", fill: true },
@@ -106,26 +134,34 @@ const DashboardPage = () => {
         ]
     };
 
-    const sleepTrendData = {
-        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    const sleepTrendData = sleep && {
+        labels: Array.from({ length: sleep.trend.length }, (_, i) => ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][i % 7]),
         datasets: [{ label: "Sleep Duration (hrs)", data: sleep.trend, borderColor: "rgba(153, 102, 255, 1)", backgroundColor: "rgba(153, 102, 255, 0.2)", fill: true }]
     };
 
-    const stressLevel = heartRate.average > 75 ? 80 : 30;
+    const stressLevel = heartRate?.average > 75 ? 80 : 30;
 
     return (
         <div className={styles.dashboardContainer}>
             {showPopup && <Popup onClose={() => setShowPopup(false)} onFileUpload={handleFileUpload} />}
+
             <Sidebar />
+
             <div className={styles.mainContent}>
-                <div className={styles.metricsGrid}>
-                    <Card title="Blood Pressure" data={`${bloodPressure.systolic}/${bloodPressure.diastolic} mmHg`} trendData={bloodPressureTrendData} />
-                    <Card title="Average Sleep" data={`${sleep.averageHours} hrs`} trendData={sleepTrendData} />
-                    <Card title="Average Heart Rate" data={`${heartRate.average} bpm`} trendData={heartRateTrendData} />
-                    <Card title="Stress Analysis">
-                        <StressGauge stressLevel={stressLevel} />
-                    </Card>
-                </div>
+                {showStepper ? (
+                    <Stepper steps={stepsData} activeStep={activeStep} />
+                ) : (
+                    healthData && ( // Only show metrics after stepper completes
+                        <div className={styles.metricsGrid}>
+                            <Card title="Blood Pressure" data={`${bloodPressure.systolic}/${bloodPressure.diastolic} mmHg`} trendData={bloodPressureTrendData} />
+                            <Card title="Average Sleep" data={`${sleep.averageHours} hrs`} trendData={sleepTrendData} />
+                            <Card title="Average Heart Rate" data={`${heartRate.average} bpm`} trendData={heartRateTrendData} />
+                            <Card title="Stress Analysis">
+                                <StressGauge stressLevel={stressLevel} />
+                            </Card>
+                        </div>
+                    )
+                )}
             </div>
         </div>
     );

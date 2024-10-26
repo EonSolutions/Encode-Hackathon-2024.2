@@ -1,0 +1,65 @@
+.stepper {
+  padding: 20px;
+  background-color: #f7f7f9;
+  border-radius: 8px;
+  max-height: 80vh;
+  overflow-y: auto;
+
+  h2 {
+    font-size: 1.5em;
+    margin-bottom: 16px;
+  }
+
+  .stepsList {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .step {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #e0e0e0;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .stepIndicator {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 12px;
+  }
+
+  .in-progress .stepIndicator {
+    background-color: #1980e6;
+    color: #fff;
+  }
+
+  .completed .stepIndicator {
+    background-color: #4caf50;
+    color: #fff;
+  }
+
+  .pending .stepIndicator {
+    background-color: #ddd;
+    color: #888;
+  }
+
+  .stepContent {
+    .stepLabel {
+      font-weight: bold;
+    }
+
+    .stepStatus {
+      font-size: 0.9em;
+      color: #666;
+    }
+  }
+}
