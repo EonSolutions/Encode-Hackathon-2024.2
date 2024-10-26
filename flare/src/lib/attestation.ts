@@ -36,4 +36,5 @@ async function prepareAttestationRequest(
   const data = await response.json();
   return data;
 }
+
 export { prepareAttestationRequest };
