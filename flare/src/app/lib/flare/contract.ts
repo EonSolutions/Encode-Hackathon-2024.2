@@ -1,9 +1,14 @@
 import { ContractHolder } from "../ctx/contractctx";
 
-async function getMethods(contract: ContractHolder) {
+async function transact(
+  contract: ContractHolder,
+  user: string,
+  method: string,
+  args: any[]
+) {
   if (!contract.contract) return;
-
-  return contract.contract;
+  if (!user) return;
+  contract.contract.methods[method](...args).send({ from: user });
 }
 
-export { getMethods };
+export { transact };
