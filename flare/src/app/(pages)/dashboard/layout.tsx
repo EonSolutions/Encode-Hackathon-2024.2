@@ -1,6 +1,6 @@
 import { Children } from "@/app/lib/types";
 
-import "@/styles/main.scss";
+import "../../styles/main.scss";
 export default function MainLayout({ children }: Children) {
   return (
     <div className="app">
