@@ -1,0 +1,57 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3); // Semi-transparent overlay
+  backdrop-filter: blur(8px); // Apply blur effect
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popupContainer {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+}
+
+.popupTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.popupText {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.buttonsContainer {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.uploadButton, .cancelButton {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.uploadButton {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
+.cancelButton {
+  background-color: #ccc;
+}
