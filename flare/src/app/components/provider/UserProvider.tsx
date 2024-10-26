@@ -1,7 +1,7 @@
 "use client";
 
-import UserContext, { User } from "@/lib/ctx/userctx";
-import { Children } from "@/lib/types";
+import UserContext, { User } from "@/app/lib/ctx/userctx";
+import { Children } from "@/app/lib/types";
 import { useState } from "react";
 
 export const UserProvider = ({ children }: Children) => {

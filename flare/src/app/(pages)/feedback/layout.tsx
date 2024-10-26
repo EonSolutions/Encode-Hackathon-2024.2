@@ -1,9 +1,9 @@
-import { Children } from "@/lib/types";
-import SidebarButton from "@/components/ui/SidebarButton";
+import { Children } from "@/app/lib/types";
+import SidebarButton from "@/app/components/ui/SidebarButton";
 import {Cog, DollarSign, HomeIcon, MessageSquareMore, Ticket} from "lucide-react";
 
-import "@/styles/main.scss";
-import UserPanel from "@/components/ui/UserPanel";
+import "@/app/styles/main.scss";
+import UserPanel from "@/app/components/ui/UserPanel";
 
 export default function MainLayout({ children }: Children) {
   return (
