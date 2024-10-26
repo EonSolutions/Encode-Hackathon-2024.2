@@ -24,10 +24,7 @@ contract FlareDataStorage {
             data: fheResponse
         });
 
-        require(
-            fheAgentAttestation.verifyJsonApi(proof),
-            "Invalid proof"
-        );
+        require(fheAgentAttestation.verifyFheAgent(proof), "Invalid proof");
 
         DataEntry memory entry = abi.decode(fheResponse.responseBody.abi_encoded_data, (DataEntry));
         dataEntries.push(entry);

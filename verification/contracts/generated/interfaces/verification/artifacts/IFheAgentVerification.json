@@ -1,0 +1,149 @@
+{
+	"deploy": {
+		"VM:-": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"main:1": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"ropsten:3": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"rinkeby:4": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"kovan:42": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"goerli:5": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"Custom": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		}
+	},
+	"data": {
+		"bytecode": {
+			"functionDebugData": {},
+			"generatedSources": [],
+			"linkReferences": {},
+			"object": "",
+			"opcodes": "",
+			"sourceMap": ""
+		},
+		"deployedBytecode": {
+			"functionDebugData": {},
+			"generatedSources": [],
+			"immutableReferences": {},
+			"linkReferences": {},
+			"object": "",
+			"opcodes": "",
+			"sourceMap": ""
+		},
+		"gasEstimates": null,
+		"methodIdentifiers": {
+			"verifyFheAgent((bytes32[],(bytes32,bytes32,uint64,uint64,(string,string,string,string),(bytes))))": "22e90cd5"
+		}
+	},
+	"abi": [
+		{
+			"inputs": [
+				{
+					"components": [
+						{
+							"internalType": "bytes32[]",
+							"name": "merkleProof",
+							"type": "bytes32[]"
+						},
+						{
+							"components": [
+								{
+									"internalType": "bytes32",
+									"name": "attestationType",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "bytes32",
+									"name": "sourceId",
+									"type": "bytes32"
+								},
+								{
+									"internalType": "uint64",
+									"name": "votingRound",
+									"type": "uint64"
+								},
+								{
+									"internalType": "uint64",
+									"name": "lowestUsedTimestamp",
+									"type": "uint64"
+								},
+								{
+									"components": [
+										{
+											"internalType": "string",
+											"name": "data_id",
+											"type": "string"
+										},
+										{
+											"internalType": "string",
+											"name": "data_hash",
+											"type": "string"
+										},
+										{
+											"internalType": "string",
+											"name": "model",
+											"type": "string"
+										},
+										{
+											"internalType": "string",
+											"name": "abi_signature",
+											"type": "string"
+										}
+									],
+									"internalType": "struct IFheAgent.RequestBody",
+									"name": "requestBody",
+									"type": "tuple"
+								},
+								{
+									"components": [
+										{
+											"internalType": "bytes",
+											"name": "abi_encoded_data",
+											"type": "bytes"
+										}
+									],
+									"internalType": "struct IFheAgent.ResponseBody",
+									"name": "responseBody",
+									"type": "tuple"
+								}
+							],
+							"internalType": "struct IFheAgent.Response",
+							"name": "data",
+							"type": "tuple"
+						}
+					],
+					"internalType": "struct IFheAgent.Proof",
+					"name": "_proof",
+					"type": "tuple"
+				}
+			],
+			"name": "verifyFheAgent",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "_proved",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		}
+	]
+}
