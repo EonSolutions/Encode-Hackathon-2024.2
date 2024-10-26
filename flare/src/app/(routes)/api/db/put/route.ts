@@ -4,7 +4,7 @@ import {db} from "@/lib/firebaseConfig";
 export async function POST(req: Request) {
     const body = await req.json();
     const encryptedFeedback = body.encryptedFeedback;
-    const docRef = await addDoc(collection(db, "feedbacks"), {
+    const docRef = await addDoc(collection(db, "analytics"), {
         encryptedFeedback: encryptedFeedback,
         timestamp: new Date(),
     });
