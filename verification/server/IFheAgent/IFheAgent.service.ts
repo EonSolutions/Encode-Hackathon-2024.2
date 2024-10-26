@@ -45,12 +45,16 @@ export class IFheAgentVerifierService extends BaseVerifierService<
 
     const result = new AttestationResponse<IFheAgent_Response>();
 
+    const b64id = Buffer.from(data_id, 'base64').toString('base64');
+    const b64hash = Buffer.from(data_hash, 'base64').toString('base64');
+    const b64model = Buffer.from(model, 'base64').toString('base64');
+
     let responseData: FHEResponse;
     await axios
-      .post("https://localhost:5002/fhe", {
-        id: data_id,
-        hash: data_hash,
-        model: model,
+      .post("http://localhost:5002/fhe", {
+        id: b64id,
+        hash: b64hash,
+        model: b64model,
       })
       .then((response) => {
         responseData = response['data'] as FHEResponse;
