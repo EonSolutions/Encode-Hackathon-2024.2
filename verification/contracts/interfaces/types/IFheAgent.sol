@@ -10,7 +10,7 @@ pragma solidity >=0.7.6 <0.9;
  * @custom:supported WEB2
  * @author Cy4
  * @notice FheAgent attestation type
- * @custom:verification <general verification rules>
+ * @custom:verification Data is fetched from a url. The structure of the final json is written in the `abi_signature` field.
  * @custom:lut <lowestUsedTimestamp>
  */
 interface IFheAgent {

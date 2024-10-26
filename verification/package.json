@@ -18,7 +18,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "generate": "yarn ts-node scripts/generate.ts"
+    "generate": "yarn ts-node scripts/generate.ts",
+    "generate-npm": "npx ts-node scripts/generate.ts"
   },
   "dependencies": {
     "@commander-js/extra-typings": "^12.1.0",
