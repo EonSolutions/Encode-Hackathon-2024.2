@@ -2,10 +2,9 @@ from sklearn.decomposition import PCA
 from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.pipeline import Pipeline
 import pandas as pd
-import numpy as np
 import os 
 from concrete.ml.sklearn.xgb import XGBClassifier
-from concrete.ml.deployment import FHEModelDev, FHEModelClient, FHEModelServer
+from concrete.ml.deployment import FHEModelDev
 
 df = pd.read_csv("products.csv")
 df["Label"] = df["Label"].apply(hash)
