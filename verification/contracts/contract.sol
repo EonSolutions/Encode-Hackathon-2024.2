@@ -5,7 +5,7 @@ import "./generated/interfaces/verification/IFheAgentVerification.sol";
 import "./generated/implementation/verification/FheAgentVerification.sol";
 
 struct DataEntry {
-    bytes32 id;
+    bytes32 encrypted_id;
     bytes32 encrypted_data_hash;
     string encrypted_data;
     string encrypted_result;
@@ -36,13 +36,13 @@ contract FlareDataStorage {
 
     function getDataEntry(bytes32 id) public view returns (DataEntry memory) {
         for (uint i = 0; i < dataEntries.length; i++) {
-            if (dataEntries[i].id == id) {
+            if (dataEntries[i].encrypted_id == id) {
                 return dataEntries[i];
             }
         }
 
         return DataEntry({
-            id: bytes32(0),
+            encrypted_id: bytes32(0),
             encrypted_data_hash: bytes32(0),
             encrypted_data: "",
             encrypted_result: ""
