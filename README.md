@@ -5,31 +5,8 @@
 - Agent Validation using the FDC
 - Fully Homomorphic Encryption of data during processing
 - Support for AI Processing
-### Key Components:
-
-1. **Client**:
-   - Responsible for generating and sending **raw data**.
-   - Data is encrypted before it is transmitted to the **External Repository**.
-
-2. **External Repository**:
-   - Acts as a storage facility for **encrypted data** received from the client.
-   - The data stored here remains secure and inaccessible to unauthorized parties.
-
-3. **FHEAI Model Agents**:
-   - Computation units that utilize **Fully Homomorphic Encryption** to process encrypted data without revealing sensitive information.
-   - Multiple agents work in parallel, interacting with the **Attestation Providers** for security validations.
-
-4. **Attestation Providers**:
-   - Critical to ensuring trust within the network.
-   - Responsible for verifying the legitimacy and security of data requests and responses between the client, FHEAI agents, and the **Flare Network**.
-
-5. **Data Connector**:
-   - Bridges the communication between SEPIA components and the **Flare Network**.
-   - Facilitates secure data transmission and attestation processes.
-
-6. **Flare Network**:
-   - Provides decentralized attestation services to ensure trustworthiness and integrity in the computation and data handling process.
-   - The **Data Connector** interacts with the network to retrieve and send requests/responses.
+### How does Sepia Work?
+Sepia works by encrypting input data by users and storing it on an external repository
 
 ## Demo Usage
 
@@ -64,7 +41,10 @@ npm i
 ```sh
 npm run dev
 ```
+## Experience with Flare
+We have thoroughly enjoyed our time working with the Flare Network. We found an incredible use case for the Data Connector which allows us to validate requests sent to user hosted agents, which adds the needed layer of security to ensure truthiness of data processed.
 
+Although we struggled to implement the technology, the support we recieved from Flare Mentors was invaluable, as they helped us identify flaws in our solutions and ultimatly improved our understanding of the Flare Network.
 ## Contact
 
 - Tom Shtasel: veschi@gmail.com
