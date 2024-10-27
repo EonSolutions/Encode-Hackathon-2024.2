@@ -2,6 +2,7 @@
 import { useUser } from "@/app/lib/ctx/userctx";
 import styles from "./landing.module.scss";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function LandingPage() {
     const { walletId, login, logout } = useUser();
@@ -22,9 +23,9 @@ export default function LandingPage() {
             </nav>
 
             <section className={styles.banner}>
-                <div className={styles.textContent}>
+                <div className={styles.textContainer}>
                     <h1>Smart Health Tracking Made Easy!</h1>
-                    <p>Connect your wallet to get started with secure and seamless health tracking.</p>
+                    <p>Connect your wallet to get started with secure and private health tracking.</p>
                     <button
                         className={styles.connectWallet}
                         onClick={async () => {
@@ -50,7 +51,7 @@ export default function LandingPage() {
                     {walletId && <p className={styles.walletId}>{walletId}</p>}
                 </div>
                 <div className={styles.illustration}>
-                    <img src="/images/health-illustration.svg" alt="Health Tracking" />
+                    <Image src="/rb_2133.png" alt="Health Tracking" width={500} height={500}/>
                 </div>
             </section>
 
