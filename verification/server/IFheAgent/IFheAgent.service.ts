@@ -16,7 +16,7 @@ import Web3 from 'web3';
 import { createHash } from 'crypto';
 
 type FHEResponse = {
-  id: string;
+  encrypted_id: string;
   encrypted_data_hash: string;
   encrypted_data: string;
   encrypted_result: string;
@@ -76,7 +76,7 @@ export class IFheAgentVerifierService extends BaseVerifierService<
     const web3 = new Web3();
     const responseBody = new IFheAgent_ResponseBody({
       abi_encoded_data: web3.eth.abi.encodeParameter(abiSign, {
-        encrypted_id: "0x" + Buffer.from(b64id, 'utf-8').toString('hex'),
+        encrypted_id: responseData.encrypted_id,
         encrypted_data_hash: "0x" + responseData.encrypted_data_hash,
         encrypted_result: responseData.encrypted_result,
         encrypted_data: responseData.encrypted_data,
