@@ -29,7 +29,7 @@ contract FlareDataStorage {
             "Invalid proof"
         );
 
-        DataEntry memory entry = abi.decode(fheResponse.responseBody.abi_encoded_data, (DataEntry));
-        dataEntries.push(entry);
+        DataEntry memory _entry = abi.decode(fheResponse.responseBody.abi_encoded_data, (DataEntry));
+        dataEntries.push(_entry);
     } 
 }

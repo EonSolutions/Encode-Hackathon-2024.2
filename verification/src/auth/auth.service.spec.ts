@@ -20,10 +20,12 @@ describe('AuthService', () => {
   });
 
   it('should be defined', () => {
+    //@ts-ignore
     expect(service).toBeDefined();
   });
 
   it('should be able to use config module', () => {
+    //@ts-ignore
     expect(service.validateApiKey('abc123')).toBe(true);
   });
 });
