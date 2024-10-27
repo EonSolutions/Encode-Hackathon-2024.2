@@ -12,10 +12,11 @@ import {
   IVerificationServiceConfig,
 } from 'src/services/common/verifier-base.service';
 import { AttestationResponse } from '../../src/dtos/generic/generic.dto';
-import Web3 from 'web3';
 import { createHash } from 'crypto';
+import Web3 from 'web3';
 
 type FHEResponse = {
+  encrypted_data_hash: string;
   encrypted_data: string;
   encrypted_result: string;
 };
@@ -40,27 +41,26 @@ export class IFheAgentVerifierService extends BaseVerifierService<
 
     const data_id = fixedRequest.requestBody.data_id;
     const data_hash = fixedRequest.requestBody.data_hash;
-    const model = fixedRequest.requestBody.model;
     const abiSign = JSON.parse(fixedRequest.requestBody.abi_signature);
 
     const result = new AttestationResponse<IFheAgent_Response>();
 
+    console.log(data_hash);
+    console.log(Buffer.from(data_hash.slice(2), 'hex').toString('base64'));
+
     const b64id = Buffer.from(data_id, 'base64').toString('base64');
     const b64hash = Buffer.from(data_hash, 'base64').toString('base64');
-    const b64model = Buffer.from(model, 'base64').toString('base64');
 
     let responseData: FHEResponse;
     await axios
       .post('http://localhost:5002/fhe', {
         id: b64id,
         hash: b64hash,
-        model: b64model,
       })
       .then((response) => {
         responseData = response['data'] as FHEResponse;
       })
       .catch((error) => {
-        // console.error(error);
         result.status = AttestationResponseStatus.INVALID;
         return result;
       });
@@ -73,7 +73,11 @@ export class IFheAgentVerifierService extends BaseVerifierService<
 
     const web3 = new Web3();
     const responseBody = new IFheAgent_ResponseBody({
-      abi_encoded_data: web3.eth.abi.encodeParameter(abiSign, responseData),
+      abi_encoded_data: web3.eth.abi.encodeParameter(abiSign, {
+        encrypted_data_hash: "0x" + responseData.encrypted_data_hash,
+        encrypted_result: responseData.encrypted_result,
+        encrypted_data: responseData.encrypted_data,
+      }),
     });
 
     const attResponse = new IFheAgent_Response({

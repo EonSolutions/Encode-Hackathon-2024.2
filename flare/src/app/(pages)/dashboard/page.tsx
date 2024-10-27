@@ -8,7 +8,7 @@ import Stepper from "./Stepper";
 import { hashFunc } from "@/app/lib/encrypt";
 import { useContract } from "@/app/lib/ctx/contractctx";
 import { useUser } from "@/app/lib/ctx/userctx";
-import Web3 from "web3";
+import { transact } from "@/app/lib/flare/contract";
 
 // Sidebar Component
 const Sidebar = () => (
@@ -163,39 +163,26 @@ const DashboardPage = () => {
 
     setActiveStep(1);
 
+    function toBytes32(string: string): string {
+      const hexString = Buffer.from(string).toString("hex"); // Convert to hex
+      if (hexString.length > 64) {
+          throw new Error("String is too long to convert to bytes32");
+      }
+      return "0x" + hexString.padEnd(64, "0"); // Pad to 32 bytes (64 hex characters)
+  }
+  console.log(doc_ref);
+  console.log(hashFunc(encrypted_input));
+
     // Step 2: Prepare attestation request
-
-    const abi_signature = {
-      DataEntry: {
-        encrypted_result: "string",
-        encrypted_data: "string",
-      },
-    };
-
-
-    console.log(
-
-        JSON.stringify({
-            data_id: doc_ref,
-            data_hash: hashFunc(encrypted_input),
-            model: "feedback",
-            abi_signature: JSON.stringify({
-              DataEntry: {
-                encrypted_result: "string",
-                encrypted_data: "string",
-              },
-            }),
-          })
-    )
     const res2 = await fetch("api/attest", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        data_id: doc_ref,
-        data_hash: hashFunc(encrypted_input),
-        model: "feedback",
+        // Convert string to byte hex
+        data_id: toBytes32(doc_ref),
+        data_hash: "0x" + hashFunc(encrypted_input),
         abi_signature: JSON.stringify({
           DataEntry: {
             encrypted_data_hash: "bytes32",
@@ -205,17 +192,18 @@ const DashboardPage = () => {
         }),
       }),
     });
-    const req = (await res2.json());
-
-    console.log(req);
-
-    // Decode
+    console.log(await res2.json());
+    const req = (await res2.json()).response;
 
     setActiveStep(2);
 
+    console.log(req);
+
     // Step 3: Sign transaction
-    // Run a function on contract with the abi encoded request
-    contract.contract!.methods["createDataEntry"](req).send({ from: walletId });
+    const output = await transact(contract, walletId, "addDataEntry", [req], 10000000);
+    console.log(output);
+
+    setActiveStep(3);
   };
 
   // Simulated steps data

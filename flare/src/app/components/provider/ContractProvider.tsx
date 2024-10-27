@@ -7,7 +7,7 @@ import Web3, { Contract } from "web3";
 
 import abi from "@/app/lib/flare/abi.json";
 
-const CONTRACT_ADDR = "0xDA7703F33B7DE79721b5d5dec7F7518b514406ba";
+const CONTRACT_ADDR = "0xa8250Fa46a06Ab19fA29659789D485cF22Cb9F51";
 
 export const ContractProvider = ({ children }: Children) => {
   const [contract, setContract] = useState<Contract<any> | undefined>(
