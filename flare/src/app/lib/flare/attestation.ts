@@ -1,5 +1,4 @@
 const ATTESTATION_URL = "http://localhost:8000"
-const ATTESTATION_API_KEY = "";
 
 function toHex(data: string): string {
   var result = "";

@@ -167,26 +167,12 @@ const DashboardPage = () => {
 
     const abi_signature = {
       DataEntry: {
+        encrypted_data_hash: "bytes32",
         encrypted_result: "string",
         encrypted_data: "string",
       },
     };
 
-
-    console.log(
-
-        JSON.stringify({
-            data_id: doc_ref,
-            data_hash: hashFunc(encrypted_input),
-            model: "feedback",
-            abi_signature: JSON.stringify({
-              DataEntry: {
-                encrypted_result: "string",
-                encrypted_data: "string",
-              },
-            }),
-          })
-    )
     const res2 = await fetch("api/attest", {
       method: "POST",
       headers: {
@@ -196,16 +182,10 @@ const DashboardPage = () => {
         data_id: doc_ref,
         data_hash: hashFunc(encrypted_input),
         model: "feedback",
-        abi_signature: JSON.stringify({
-          DataEntry: {
-            encrypted_data_hash: "bytes32",
-            encrypted_result: "string",
-            encrypted_data: "string",
-          },
-        }),
+        abi_signature: JSON.stringify(abi_signature),
       }),
     });
-    const req = (await res2.json());
+    const req = (await res2.json()).response;
 
     console.log(req);
 
@@ -215,7 +195,7 @@ const DashboardPage = () => {
 
     // Step 3: Sign transaction
     // Run a function on contract with the abi encoded request
-    contract.contract!.methods["createDataEntry"](req).send({ from: walletId });
+    contract.contract!.methods["addDataEntry"](req).send({ from: walletId });
   };
 
   // Simulated steps data

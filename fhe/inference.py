@@ -5,7 +5,7 @@ import base64
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-from concrete.fhe import Value
+import sys
 
 
 app = Flask(__name__)
@@ -40,6 +40,7 @@ def fhe():
         encrypted_data = doc_ref.get().to_dict()["encryptedFeedback"]
 
         encrypted_result = server.run(base64.b64decode(encrypted_data), serialized_evaluation_keys)
+        print(sys.getsizeof(encrypted_result))
         return jsonify({
                 'encrypted_data_hash': request.json['hash'],
                 'encrypted_data': encrypted_data,

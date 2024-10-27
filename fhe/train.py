@@ -31,12 +31,12 @@ pipeline = Pipeline(
 
 # Define the parameters to tune
 param_grid = {
-    "model__max_depth": [2, 3, 5],
-    "model__n_estimators": [5, 10, 20],
+    "model__max_depth": [1, 2, 3],
+    "model__n_estimators": [1, 2, 3],
 }
 
 # Instantiate the grid search with 5-fold cross validation on all available cores
-grid = GridSearchCV(pipeline, param_grid, cv=5, n_jobs=-1, scoring="accuracy")
+grid = GridSearchCV(pipeline, param_grid, cv=3, n_jobs=-1, scoring="accuracy")
 
 # Launch the grid search
 grid.fit(X_train, y_train)
