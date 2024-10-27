@@ -5,7 +5,7 @@
 - Agent Validation using the FDC
 - Fully Homomorphic Encryption of data during processing
 - Support for AI Processing
-### How does Sepia Work? *Unfinished*
+### How does Sepia Work?
 Sepia works by encrypting input data by users and storing it on an external repository. It then sends a request to the Flare Data Connector with a hash to this data. <br><br>
 By extending Flare's attestation type to suit Sepia's needs, we can **verify data integrity** across multiple sources before processing, supporting privacy-preserving, multi-chain interoperability.<br><br>
 Hosted 'agents' accept encrypted inputs sent by the FDC and processes them, utilising **Full Homomorphic Encryption** to process user data without decrypting it.<br><br>
