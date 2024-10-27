@@ -191,12 +191,22 @@ const DashboardPage = () => {
 
     // Step 3: Sign transaction
     setActiveStep(2);
-    await contract.contract!.methods["addDataEntry"](req).send({ from: walletId });
+    await contract
+      .contract!.methods["addDataEntry"](req)
+      .send({ from: walletId });
 
     // Step 4: Decrypt result
     setActiveStep(3);
-    const data2 = await contract.contract!.methods["getDataEntry"](doc_ref).send({ from: walletId });
-    console.log(data2);
+
+    contract
+      .contract!.methods.getDataEntry(doc_ref)
+      .call({ from: walletId, gas: 500000 })
+      .then((result) => {
+        console.log("Data Entry:", result);
+      })
+      .catch((error) => {
+        console.error("Error calling getDataEntry:", error);
+      });
   };
 
   // Simulated steps data

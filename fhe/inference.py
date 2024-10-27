@@ -44,7 +44,7 @@ def fhe():
                 'encrypted_id': id,
                 'encrypted_data_hash': request.json['hash'],
                 'encrypted_data': encrypted_data,
-                'encrypted_result': base64.b64encode(b"test").decode('ascii')
+                'encrypted_result': base64.b64encode(encrypted_result).decode('ascii')
             }), 200
     except Exception as e:
         print(e)
