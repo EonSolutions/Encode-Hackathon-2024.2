@@ -1,0 +1,30 @@
+{
+  "heartRate": {
+    "average": 74,
+    "trend": [70, 72, 74, 73, 71, 72, 73, 74, 76, 72, 73, 75, 77, 78, 80, 79, 78, 76, 74, 73, 72]
+  },
+  "bloodPressure": {
+    "systolic": 125,
+    "diastolic": 82,
+    "trend": [
+      { "day": "Mon", "systolic": 118, "diastolic": 78 },
+      { "day": "Tue", "systolic": 121, "diastolic": 79 },
+      { "day": "Wed", "systolic": 119, "diastolic": 77 },
+      { "day": "Thu", "systolic": 123, "diastolic": 80 },
+      { "day": "Fri", "systolic": 117, "diastolic": 76 },
+      { "day": "Sat", "systolic": 120, "diastolic": 78 },
+      { "day": "Sun", "systolic": 122, "diastolic": 81 },
+      { "day": "Mon", "systolic": 119, "diastolic": 79 },
+      { "day": "Tue", "systolic": 120, "diastolic": 77 },
+      { "day": "Wed", "systolic": 123, "diastolic": 80 },
+      { "day": "Thu", "systolic": 125, "diastolic": 82 },
+      { "day": "Fri", "systolic": 121, "diastolic": 78 },
+      { "day": "Sat", "systolic": 124, "diastolic": 79 },
+      { "day": "Sun", "systolic": 118, "diastolic": 76 }
+    ]
+  },
+  "sleep": {
+    "averageHours": 7.2,
+    "trend": [7.5, 6.8, 7.3, 8, 6.9, 7.2, 7.1, 7.5, 8.2, 6.7, 7.3, 7.4, 6.8, 7.0, 7.6, 7.3, 8.1]
+  }
+}
