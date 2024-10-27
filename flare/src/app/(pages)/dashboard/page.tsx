@@ -166,7 +166,7 @@ const DashboardPage = () => {
 
     const abi_signature = {
       DataEntry: {
-        id: "bytes32",
+        encrypted_id: "bytes32",
         encrypted_data_hash: "bytes32",
         encrypted_result: "string",
         encrypted_data: "string",

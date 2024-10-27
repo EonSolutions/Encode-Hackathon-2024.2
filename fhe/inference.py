@@ -41,7 +41,7 @@ def fhe():
         encrypted_result = server.run(base64.b64decode(encrypted_data), serialized_evaluation_keys)
         
         return jsonify({
-                'id': id,
+                'encrypted_id': id,
                 'encrypted_data_hash': request.json['hash'],
                 'encrypted_data': encrypted_data,
                 'encrypted_result': base64.b64encode(encrypted_result).decode('ascii')
