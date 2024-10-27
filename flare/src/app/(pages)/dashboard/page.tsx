@@ -195,6 +195,8 @@ const DashboardPage = () => {
 
     // Step 4: Decrypt result
     setActiveStep(3);
+    const data2 = await contract.contract!.methods["getDataEntry"](doc_ref).send({ from: walletId });
+    console.log(data2);
   };
 
   // Simulated steps data

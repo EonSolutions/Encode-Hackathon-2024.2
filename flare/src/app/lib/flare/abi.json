@@ -1,5 +1,10 @@
 [
 	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
 		"inputs": [
 			{
 				"components": [
@@ -74,11 +79,6 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -89,9 +89,9 @@
 		"name": "dataEntries",
 		"outputs": [
 			{
-				"internalType": "bytes32",
-				"name": "id",
-				"type": "bytes32"
+				"internalType": "string",
+				"name": "encrypted_id",
+				"type": "string"
 			},
 			{
 				"internalType": "bytes32",
@@ -128,9 +128,9 @@
 	{
 		"inputs": [
 			{
-				"internalType": "bytes32",
+				"internalType": "string",
 				"name": "id",
-				"type": "bytes32"
+				"type": "string"
 			}
 		],
 		"name": "getDataEntry",
@@ -138,9 +138,9 @@
 			{
 				"components": [
 					{
-						"internalType": "bytes32",
-						"name": "id",
-						"type": "bytes32"
+						"internalType": "string",
+						"name": "encrypted_id",
+						"type": "string"
 					},
 					{
 						"internalType": "bytes32",

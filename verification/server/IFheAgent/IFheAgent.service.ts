@@ -72,7 +72,7 @@ export class IFheAgentVerifierService extends BaseVerifierService<
       result.status = AttestationResponseStatus.INVALID;
       return result;
     }
-
+    
     const web3 = new Web3();
     const responseBody = new IFheAgent_ResponseBody({
       abi_encoded_data: web3.eth.abi.encodeParameter(abiSign, {
