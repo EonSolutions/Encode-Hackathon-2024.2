@@ -34,7 +34,7 @@ contract FlareDataStorage {
         dataEntries.push(entry);
     } 
 
-    function getDataEntry(string calldata id) public view returns (DataEntry memory) {
+    function getDataEntry(string calldata id) external view returns (DataEntry memory) {
         for (uint i = 0; i < dataEntries.length; i++) {
             if (keccak256(abi.encodePacked(dataEntries[i].encrypted_id)) == keccak256(abi.encodePacked(id))) {
                 return dataEntries[i];
