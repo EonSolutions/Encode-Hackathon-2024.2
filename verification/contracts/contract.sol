@@ -25,7 +25,7 @@ contract FlareDataStorage {
         });
 
         require(
-            fheAgentAttestation.verifyJsonApi(proof),
+            fheAgentAttestation.verifyFheAgent(proof),
             "Invalid proof"
         );
 
