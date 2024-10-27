@@ -62,7 +62,7 @@ export class IFheAgentVerifierService extends BaseVerifierService<
         responseData = response['data'] as FHEResponse;
       })
       .catch((error) => {
-        // console.error(error);
+        console.error(error);
         result.status = AttestationResponseStatus.INVALID;
         return result;
       });
@@ -76,7 +76,7 @@ export class IFheAgentVerifierService extends BaseVerifierService<
     const web3 = new Web3();
     const responseBody = new IFheAgent_ResponseBody({
       abi_encoded_data: web3.eth.abi.encodeParameter(abiSign, {
-        id: "0x" + data_id,
+        id: "0x" + Buffer.from(b64id, 'utf-8').toString('hex'),
         encrypted_data_hash: "0x" + responseData.encrypted_data_hash,
         encrypted_result: responseData.encrypted_result,
         encrypted_data: responseData.encrypted_data,

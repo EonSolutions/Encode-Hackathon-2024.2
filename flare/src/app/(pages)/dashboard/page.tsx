@@ -187,6 +187,8 @@ const DashboardPage = () => {
     });
     const req = (await res2.json()).response;
 
+    console.log(req);
+
     // Step 3: Sign transaction
     setActiveStep(2);
     await contract.contract!.methods["addDataEntry"](req).send({ from: walletId });
@@ -213,19 +215,6 @@ const DashboardPage = () => {
       completedDescription: "Transaction Complete",
     },
   ];
-
-  // Handle auto-advancing steps
-  // useEffect(() => {
-  //     if (showStepper && activeStep < stepsData.length - 1) {
-  //         const interval = setInterval(() => {
-  //             setActiveStep((prev) => prev + 1);
-  //         }, 1000); // Adjust time interval as needed
-  //         return () => clearInterval(interval);
-  //     } else if (activeStep === stepsData.length - 1) {
-  //         // Hide stepper and display data after the last step
-  //         setTimeout(() => setShowStepper(false), 1000);
-  //     }
-  // }, [showStepper, activeStep]);
 
   const { heartRate, bloodPressure, sleep } = healthData || {
     heartRate: undefined,

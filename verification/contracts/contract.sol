@@ -41,6 +41,11 @@ contract FlareDataStorage {
             }
         }
 
-        revert("Data entry not found");
+        return DataEntry({
+            id: bytes32(0),
+            encrypted_data_hash: bytes32(0),
+            encrypted_data: "",
+            encrypted_result: ""
+        });
     }
 }

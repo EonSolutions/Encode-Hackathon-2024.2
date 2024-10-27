@@ -5,7 +5,6 @@ import base64
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-import sys
 
 
 app = Flask(__name__)
@@ -36,12 +35,13 @@ server.load()
 @cross_origin()
 def fhe():
     try:
-        doc_ref = db.collection('feedbacks').document(request.json['id'])
+        id = request.json['id']
+        doc_ref = db.collection('feedbacks').document(id)
         encrypted_data = doc_ref.get().to_dict()["encryptedFeedback"]
-
         encrypted_result = server.run(base64.b64decode(encrypted_data), serialized_evaluation_keys)
-        print(sys.getsizeof(encrypted_result))
+        
         return jsonify({
+                'id': id,
                 'encrypted_data_hash': request.json['hash'],
                 'encrypted_data': encrypted_data,
                 'encrypted_result': base64.b64encode(encrypted_result).decode('ascii')
