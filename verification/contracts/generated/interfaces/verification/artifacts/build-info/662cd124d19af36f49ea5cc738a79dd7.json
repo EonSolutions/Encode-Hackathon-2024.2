@@ -1,0 +1,1051 @@
+{
+	"id": "662cd124d19af36f49ea5cc738a79dd7",
+	"_format": "hh-sol-build-info-1",
+	"solcVersion": "0.8.26",
+	"solcLongVersion": "0.8.26+commit.8a97fa7a",
+	"input": {
+		"language": "Solidity",
+		"sources": {
+			"verification/contracts/generated/interfaces/verification/IFheAgentVerification.sol": {
+				"content": "// SPDX-License-Identifier: MIT\n  pragma solidity ^0.8.0;\n  \n  import \"../../../interfaces/types/IFheAgent.sol\";\n  \n  \n  interface IFheAgentVerification {\n     function verifyFheAgent(\n        IFheAgent.Proof calldata _proof\n     ) external view returns (bool _proved);\n  }\n     "
+			},
+			"verification/contracts/interfaces/types/IFheAgent.sol": {
+				"content": "// SPDX-License-Identifier: MIT\npragma solidity >=0.7.6 <0.9;\n\n///////////////////////////////////////////////////////////////////\n// DO NOT CHANGE Request and Response definitions!!!\n///////////////////////////////////////////////////////////////////\n\n/**\n * @custom:name IFheAgent\n * @custom:supported WEB2\n * @author Cy4\n * @notice FheAgent attestation type\n * @custom:verification Data is fetched from a url. The structure of the final json is written in the `abi_signature` field.\n * @custom:lut <lowestUsedTimestamp>\n */\ninterface IFheAgent {\n    /**\n     * @notice Toplevel request\n     * @param attestationType ID of the attestation type.\n     * @param sourceId ID of the data source.\n     * @param messageIntegrityCode `MessageIntegrityCode` that is derived from the expected response.\n     * @param requestBody Data defining the request. Type (struct) and interpretation is determined by the `attestationType`.\n     */\n    struct Request {\n        bytes32 attestationType;\n        bytes32 sourceId;\n        bytes32 messageIntegrityCode;\n        RequestBody requestBody;\n    }\n\n    /**\n     * @notice Toplevel response\n     * @param attestationType Extracted from the request.\n     * @param sourceId Extracted from the request.\n     * @param votingRound The ID of the State Connector round in which the request was considered.\n     * @param lowestUsedTimestamp The lowest timestamp used to generate the response.\n     * @param requestBody Extracted from the request.\n     * @param responseBody Data defining the response. The verification rules for the construction of the response body and the type are defined per specific `attestationType`.\n     */\n    struct Response {\n        bytes32 attestationType;\n        bytes32 sourceId;\n        uint64 votingRound;\n        uint64 lowestUsedTimestamp;\n        RequestBody requestBody;\n        ResponseBody responseBody;\n    }\n\n    /**\n     * @notice Toplevel proof\n     * @param merkleProof Merkle proof corresponding to the attestation response.\n     * @param data Attestation response.\n     */\n    struct Proof {\n        bytes32[] merkleProof;\n        Response data;\n    }\n\n    /**\n     * @notice Request body for FheAgent attestation type\n     * @param data_id Data id to fetch the data from\n     * @param data_hash Hash of the data\n     * @param model Model to run on the data\n     * @param abi_signature ABI signature of the data\n     **/\n    struct RequestBody {\n        string data_id;\n        string data_hash;\n        string model;\n        string abi_signature;\n    }\n\n    /**\n     * @notice Response body for FheAgent attestation type.\n     * @param abi_encoded_data ABI encoded data\n     **/\n    struct ResponseBody {\n        bytes abi_encoded_data;\n    }\n}\n"
+			}
+		},
+		"settings": {
+			"optimizer": {
+				"enabled": true,
+				"runs": 200
+			},
+			"outputSelection": {
+				"*": {
+					"": [
+						"ast"
+					],
+					"*": [
+						"abi",
+						"metadata",
+						"devdoc",
+						"userdoc",
+						"storageLayout",
+						"evm.legacyAssembly",
+						"evm.bytecode",
+						"evm.deployedBytecode",
+						"evm.methodIdentifiers",
+						"evm.gasEstimates",
+						"evm.assembly"
+					]
+				}
+			},
+			"remappings": [],
+			"evmVersion": "london"
+		}
+	},
+	"output": {
+		"contracts": {
+			"verification/contracts/generated/interfaces/verification/IFheAgentVerification.sol": {
+				"IFheAgentVerification": {
+					"abi": [
+						{
+							"inputs": [
+								{
+									"components": [
+										{
+											"internalType": "bytes32[]",
+											"name": "merkleProof",
+											"type": "bytes32[]"
+										},
+										{
+											"components": [
+												{
+													"internalType": "bytes32",
+													"name": "attestationType",
+													"type": "bytes32"
+												},
+												{
+													"internalType": "bytes32",
+													"name": "sourceId",
+													"type": "bytes32"
+												},
+												{
+													"internalType": "uint64",
+													"name": "votingRound",
+													"type": "uint64"
+												},
+												{
+													"internalType": "uint64",
+													"name": "lowestUsedTimestamp",
+													"type": "uint64"
+												},
+												{
+													"components": [
+														{
+															"internalType": "string",
+															"name": "data_id",
+															"type": "string"
+														},
+														{
+															"internalType": "string",
+															"name": "data_hash",
+															"type": "string"
+														},
+														{
+															"internalType": "string",
+															"name": "model",
+															"type": "string"
+														},
+														{
+															"internalType": "string",
+															"name": "abi_signature",
+															"type": "string"
+														}
+													],
+													"internalType": "struct IFheAgent.RequestBody",
+													"name": "requestBody",
+													"type": "tuple"
+												},
+												{
+													"components": [
+														{
+															"internalType": "bytes",
+															"name": "abi_encoded_data",
+															"type": "bytes"
+														}
+													],
+													"internalType": "struct IFheAgent.ResponseBody",
+													"name": "responseBody",
+													"type": "tuple"
+												}
+											],
+											"internalType": "struct IFheAgent.Response",
+											"name": "data",
+											"type": "tuple"
+										}
+									],
+									"internalType": "struct IFheAgent.Proof",
+									"name": "_proof",
+									"type": "tuple"
+								}
+							],
+							"name": "verifyFheAgent",
+							"outputs": [
+								{
+									"internalType": "bool",
+									"name": "_proved",
+									"type": "bool"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						}
+					],
+					"devdoc": {
+						"kind": "dev",
+						"methods": {},
+						"version": 1
+					},
+					"evm": {
+						"assembly": "",
+						"bytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"deployedBytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"immutableReferences": {},
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"gasEstimates": null,
+						"legacyAssembly": null,
+						"methodIdentifiers": {
+							"verifyFheAgent((bytes32[],(bytes32,bytes32,uint64,uint64,(string,string,string,string),(bytes))))": "22e90cd5"
+						}
+					},
+					"metadata": "{\"compiler\":{\"version\":\"0.8.26+commit.8a97fa7a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"components\":[{\"internalType\":\"bytes32[]\",\"name\":\"merkleProof\",\"type\":\"bytes32[]\"},{\"components\":[{\"internalType\":\"bytes32\",\"name\":\"attestationType\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"sourceId\",\"type\":\"bytes32\"},{\"internalType\":\"uint64\",\"name\":\"votingRound\",\"type\":\"uint64\"},{\"internalType\":\"uint64\",\"name\":\"lowestUsedTimestamp\",\"type\":\"uint64\"},{\"components\":[{\"internalType\":\"string\",\"name\":\"data_id\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"data_hash\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"model\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"abi_signature\",\"type\":\"string\"}],\"internalType\":\"struct IFheAgent.RequestBody\",\"name\":\"requestBody\",\"type\":\"tuple\"},{\"components\":[{\"internalType\":\"bytes\",\"name\":\"abi_encoded_data\",\"type\":\"bytes\"}],\"internalType\":\"struct IFheAgent.ResponseBody\",\"name\":\"responseBody\",\"type\":\"tuple\"}],\"internalType\":\"struct IFheAgent.Response\",\"name\":\"data\",\"type\":\"tuple\"}],\"internalType\":\"struct IFheAgent.Proof\",\"name\":\"_proof\",\"type\":\"tuple\"}],\"name\":\"verifyFheAgent\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"_proved\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"verification/contracts/generated/interfaces/verification/IFheAgentVerification.sol\":\"IFheAgentVerification\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"verification/contracts/generated/interfaces/verification/IFheAgentVerification.sol\":{\"keccak256\":\"0x7d5bede0b5e4b51955a286ff75009e9f4e8508812d2c614ef2c1f2c02cf198e0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7361cf5a1d0d551bce3352144289052444034639aef5a0fc5038d9660499474c\",\"dweb:/ipfs/QmW7b6QGTnrrE1rFeuGJTvuaq21bwBghXgZ6LUno8yHPdN\"]},\"verification/contracts/interfaces/types/IFheAgent.sol\":{\"keccak256\":\"0x171f46b944cb6f84e99ed7afc6a0f0441fe41d1fb071231b2ad21c58391e4fca\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a46e9ed7136fa05f7dc4e7fb515ecdb889775e8b1c5914de27c2f58c4b1a75ab\",\"dweb:/ipfs/QmbPW9piwHPj7FvVFbUrZdy16kWeSjzHd7ancqz8tNo3zJ\"]}},\"version\":1}",
+					"storageLayout": {
+						"storage": [],
+						"types": null
+					},
+					"userdoc": {
+						"kind": "user",
+						"methods": {},
+						"version": 1
+					}
+				}
+			},
+			"verification/contracts/interfaces/types/IFheAgent.sol": {
+				"IFheAgent": {
+					"abi": [],
+					"devdoc": {
+						"author": "Cy4",
+						"custom:lut": "<lowestUsedTimestamp>",
+						"custom:name": "IFheAgent",
+						"custom:supported": "WEB2",
+						"custom:verification": "Data is fetched from a url. The structure of the final json is written in the `abi_signature` field.",
+						"kind": "dev",
+						"methods": {},
+						"version": 1
+					},
+					"evm": {
+						"assembly": "",
+						"bytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"deployedBytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"immutableReferences": {},
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"gasEstimates": null,
+						"legacyAssembly": null,
+						"methodIdentifiers": {}
+					},
+					"metadata": "{\"compiler\":{\"version\":\"0.8.26+commit.8a97fa7a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"author\":\"Cy4\",\"custom:lut\":\"<lowestUsedTimestamp>\",\"custom:name\":\"IFheAgent\",\"custom:supported\":\"WEB2\",\"custom:verification\":\"Data is fetched from a url. The structure of the final json is written in the `abi_signature` field.\",\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"notice\":\"FheAgent attestation type\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"verification/contracts/interfaces/types/IFheAgent.sol\":\"IFheAgent\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"verification/contracts/interfaces/types/IFheAgent.sol\":{\"keccak256\":\"0x171f46b944cb6f84e99ed7afc6a0f0441fe41d1fb071231b2ad21c58391e4fca\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a46e9ed7136fa05f7dc4e7fb515ecdb889775e8b1c5914de27c2f58c4b1a75ab\",\"dweb:/ipfs/QmbPW9piwHPj7FvVFbUrZdy16kWeSjzHd7ancqz8tNo3zJ\"]}},\"version\":1}",
+					"storageLayout": {
+						"storage": [],
+						"types": null
+					},
+					"userdoc": {
+						"kind": "user",
+						"methods": {},
+						"notice": "FheAgent attestation type",
+						"version": 1
+					}
+				}
+			}
+		},
+		"sources": {
+			"verification/contracts/generated/interfaces/verification/IFheAgentVerification.sol": {
+				"ast": {
+					"absolutePath": "verification/contracts/generated/interfaces/verification/IFheAgentVerification.sol",
+					"exportedSymbols": {
+						"IFheAgent": [
+							64
+						],
+						"IFheAgentVerification": [
+							11
+						]
+					},
+					"id": 12,
+					"license": "MIT",
+					"nodeType": "SourceUnit",
+					"nodes": [
+						{
+							"id": 1,
+							"literals": [
+								"solidity",
+								"^",
+								"0.8",
+								".0"
+							],
+							"nodeType": "PragmaDirective",
+							"src": "34:23:0"
+						},
+						{
+							"absolutePath": "verification/contracts/interfaces/types/IFheAgent.sol",
+							"file": "../../../interfaces/types/IFheAgent.sol",
+							"id": 2,
+							"nameLocation": "-1:-1:-1",
+							"nodeType": "ImportDirective",
+							"scope": 12,
+							"sourceUnit": 65,
+							"src": "63:49:0",
+							"symbolAliases": [],
+							"unitAlias": ""
+						},
+						{
+							"abstract": false,
+							"baseContracts": [],
+							"canonicalName": "IFheAgentVerification",
+							"contractDependencies": [],
+							"contractKind": "interface",
+							"fullyImplemented": false,
+							"id": 11,
+							"linearizedBaseContracts": [
+								11
+							],
+							"name": "IFheAgentVerification",
+							"nameLocation": "131:21:0",
+							"nodeType": "ContractDefinition",
+							"nodes": [
+								{
+									"functionSelector": "22e90cd5",
+									"id": 10,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "verifyFheAgent",
+									"nameLocation": "169:14:0",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 6,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 5,
+												"mutability": "mutable",
+												"name": "_proof",
+												"nameLocation": "218:6:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 10,
+												"src": "193:31:0",
+												"stateVariable": false,
+												"storageLocation": "calldata",
+												"typeDescriptions": {
+													"typeIdentifier": "t_struct$_Proof_$49_calldata_ptr",
+													"typeString": "struct IFheAgent.Proof"
+												},
+												"typeName": {
+													"id": 4,
+													"nodeType": "UserDefinedTypeName",
+													"pathNode": {
+														"id": 3,
+														"name": "IFheAgent.Proof",
+														"nameLocations": [
+															"193:9:0",
+															"203:5:0"
+														],
+														"nodeType": "IdentifierPath",
+														"referencedDeclaration": 49,
+														"src": "193:15:0"
+													},
+													"referencedDeclaration": 49,
+													"src": "193:15:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_struct$_Proof_$49_storage_ptr",
+														"typeString": "struct IFheAgent.Proof"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "183:48:0"
+									},
+									"returnParameters": {
+										"id": 9,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 8,
+												"mutability": "mutable",
+												"name": "_proved",
+												"nameLocation": "260:7:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 10,
+												"src": "255:12:0",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bool",
+													"typeString": "bool"
+												},
+												"typeName": {
+													"id": 7,
+													"name": "bool",
+													"nodeType": "ElementaryTypeName",
+													"src": "255:4:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bool",
+														"typeString": "bool"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "254:14:0"
+									},
+									"scope": 11,
+									"src": "160:109:0",
+									"stateMutability": "view",
+									"virtual": false,
+									"visibility": "external"
+								}
+							],
+							"scope": 12,
+							"src": "121:152:0",
+							"usedErrors": [],
+							"usedEvents": []
+						}
+					],
+					"src": "34:245:0"
+				},
+				"id": 0
+			},
+			"verification/contracts/interfaces/types/IFheAgent.sol": {
+				"ast": {
+					"absolutePath": "verification/contracts/interfaces/types/IFheAgent.sol",
+					"exportedSymbols": {
+						"IFheAgent": [
+							64
+						]
+					},
+					"id": 65,
+					"license": "MIT",
+					"nodeType": "SourceUnit",
+					"nodes": [
+						{
+							"id": 13,
+							"literals": [
+								"solidity",
+								">=",
+								"0.7",
+								".6",
+								"<",
+								"0.9"
+							],
+							"nodeType": "PragmaDirective",
+							"src": "32:29:1"
+						},
+						{
+							"abstract": false,
+							"baseContracts": [],
+							"canonicalName": "IFheAgent",
+							"contractDependencies": [],
+							"contractKind": "interface",
+							"documentation": {
+								"id": 14,
+								"nodeType": "StructuredDocumentation",
+								"src": "253:273:1",
+								"text": " @custom:name IFheAgent\n @custom:supported WEB2\n @author Cy4\n @notice FheAgent attestation type\n @custom:verification Data is fetched from a url. The structure of the final json is written in the `abi_signature` field.\n @custom:lut <lowestUsedTimestamp>"
+							},
+							"fullyImplemented": true,
+							"id": 64,
+							"linearizedBaseContracts": [
+								64
+							],
+							"name": "IFheAgent",
+							"nameLocation": "537:9:1",
+							"nodeType": "ContractDefinition",
+							"nodes": [
+								{
+									"canonicalName": "IFheAgent.Request",
+									"documentation": {
+										"id": 15,
+										"nodeType": "StructuredDocumentation",
+										"src": "553:375:1",
+										"text": " @notice Toplevel request\n @param attestationType ID of the attestation type.\n @param sourceId ID of the data source.\n @param messageIntegrityCode `MessageIntegrityCode` that is derived from the expected response.\n @param requestBody Data defining the request. Type (struct) and interpretation is determined by the `attestationType`."
+									},
+									"id": 25,
+									"members": [
+										{
+											"constant": false,
+											"id": 17,
+											"mutability": "mutable",
+											"name": "attestationType",
+											"nameLocation": "966:15:1",
+											"nodeType": "VariableDeclaration",
+											"scope": 25,
+											"src": "958:23:1",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_bytes32",
+												"typeString": "bytes32"
+											},
+											"typeName": {
+												"id": 16,
+												"name": "bytes32",
+												"nodeType": "ElementaryTypeName",
+												"src": "958:7:1",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 19,
+											"mutability": "mutable",
+											"name": "sourceId",
+											"nameLocation": "999:8:1",
+											"nodeType": "VariableDeclaration",
+											"scope": 25,
+											"src": "991:16:1",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_bytes32",
+												"typeString": "bytes32"
+											},
+											"typeName": {
+												"id": 18,
+												"name": "bytes32",
+												"nodeType": "ElementaryTypeName",
+												"src": "991:7:1",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 21,
+											"mutability": "mutable",
+											"name": "messageIntegrityCode",
+											"nameLocation": "1025:20:1",
+											"nodeType": "VariableDeclaration",
+											"scope": 25,
+											"src": "1017:28:1",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_bytes32",
+												"typeString": "bytes32"
+											},
+											"typeName": {
+												"id": 20,
+												"name": "bytes32",
+												"nodeType": "ElementaryTypeName",
+												"src": "1017:7:1",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 24,
+											"mutability": "mutable",
+											"name": "requestBody",
+											"nameLocation": "1067:11:1",
+											"nodeType": "VariableDeclaration",
+											"scope": 25,
+											"src": "1055:23:1",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_struct$_RequestBody_$59_storage_ptr",
+												"typeString": "struct IFheAgent.RequestBody"
+											},
+											"typeName": {
+												"id": 23,
+												"nodeType": "UserDefinedTypeName",
+												"pathNode": {
+													"id": 22,
+													"name": "RequestBody",
+													"nameLocations": [
+														"1055:11:1"
+													],
+													"nodeType": "IdentifierPath",
+													"referencedDeclaration": 59,
+													"src": "1055:11:1"
+												},
+												"referencedDeclaration": 59,
+												"src": "1055:11:1",
+												"typeDescriptions": {
+													"typeIdentifier": "t_struct$_RequestBody_$59_storage_ptr",
+													"typeString": "struct IFheAgent.RequestBody"
+												}
+											},
+											"visibility": "internal"
+										}
+									],
+									"name": "Request",
+									"nameLocation": "940:7:1",
+									"nodeType": "StructDefinition",
+									"scope": 64,
+									"src": "933:152:1",
+									"visibility": "public"
+								},
+								{
+									"canonicalName": "IFheAgent.Response",
+									"documentation": {
+										"id": 26,
+										"nodeType": "StructuredDocumentation",
+										"src": "1091:569:1",
+										"text": " @notice Toplevel response\n @param attestationType Extracted from the request.\n @param sourceId Extracted from the request.\n @param votingRound The ID of the State Connector round in which the request was considered.\n @param lowestUsedTimestamp The lowest timestamp used to generate the response.\n @param requestBody Extracted from the request.\n @param responseBody Data defining the response. The verification rules for the construction of the response body and the type are defined per specific `attestationType`."
+									},
+									"id": 41,
+									"members": [
+										{
+											"constant": false,
+											"id": 28,
+											"mutability": "mutable",
+											"name": "attestationType",
+											"nameLocation": "1699:15:1",
+											"nodeType": "VariableDeclaration",
+											"scope": 41,
+											"src": "1691:23:1",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_bytes32",
+												"typeString": "bytes32"
+											},
+											"typeName": {
+												"id": 27,
+												"name": "bytes32",
+												"nodeType": "ElementaryTypeName",
+												"src": "1691:7:1",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 30,
+											"mutability": "mutable",
+											"name": "sourceId",
+											"nameLocation": "1732:8:1",
+											"nodeType": "VariableDeclaration",
+											"scope": 41,
+											"src": "1724:16:1",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_bytes32",
+												"typeString": "bytes32"
+											},
+											"typeName": {
+												"id": 29,
+												"name": "bytes32",
+												"nodeType": "ElementaryTypeName",
+												"src": "1724:7:1",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 32,
+											"mutability": "mutable",
+											"name": "votingRound",
+											"nameLocation": "1757:11:1",
+											"nodeType": "VariableDeclaration",
+											"scope": 41,
+											"src": "1750:18:1",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_uint64",
+												"typeString": "uint64"
+											},
+											"typeName": {
+												"id": 31,
+												"name": "uint64",
+												"nodeType": "ElementaryTypeName",
+												"src": "1750:6:1",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint64",
+													"typeString": "uint64"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 34,
+											"mutability": "mutable",
+											"name": "lowestUsedTimestamp",
+											"nameLocation": "1785:19:1",
+											"nodeType": "VariableDeclaration",
+											"scope": 41,
+											"src": "1778:26:1",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_uint64",
+												"typeString": "uint64"
+											},
+											"typeName": {
+												"id": 33,
+												"name": "uint64",
+												"nodeType": "ElementaryTypeName",
+												"src": "1778:6:1",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint64",
+													"typeString": "uint64"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 37,
+											"mutability": "mutable",
+											"name": "requestBody",
+											"nameLocation": "1826:11:1",
+											"nodeType": "VariableDeclaration",
+											"scope": 41,
+											"src": "1814:23:1",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_struct$_RequestBody_$59_storage_ptr",
+												"typeString": "struct IFheAgent.RequestBody"
+											},
+											"typeName": {
+												"id": 36,
+												"nodeType": "UserDefinedTypeName",
+												"pathNode": {
+													"id": 35,
+													"name": "RequestBody",
+													"nameLocations": [
+														"1814:11:1"
+													],
+													"nodeType": "IdentifierPath",
+													"referencedDeclaration": 59,
+													"src": "1814:11:1"
+												},
+												"referencedDeclaration": 59,
+												"src": "1814:11:1",
+												"typeDescriptions": {
+													"typeIdentifier": "t_struct$_RequestBody_$59_storage_ptr",
+													"typeString": "struct IFheAgent.RequestBody"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 40,
+											"mutability": "mutable",
+											"name": "responseBody",
+											"nameLocation": "1860:12:1",
+											"nodeType": "VariableDeclaration",
+											"scope": 41,
+											"src": "1847:25:1",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_struct$_ResponseBody_$63_storage_ptr",
+												"typeString": "struct IFheAgent.ResponseBody"
+											},
+											"typeName": {
+												"id": 39,
+												"nodeType": "UserDefinedTypeName",
+												"pathNode": {
+													"id": 38,
+													"name": "ResponseBody",
+													"nameLocations": [
+														"1847:12:1"
+													],
+													"nodeType": "IdentifierPath",
+													"referencedDeclaration": 63,
+													"src": "1847:12:1"
+												},
+												"referencedDeclaration": 63,
+												"src": "1847:12:1",
+												"typeDescriptions": {
+													"typeIdentifier": "t_struct$_ResponseBody_$63_storage_ptr",
+													"typeString": "struct IFheAgent.ResponseBody"
+												}
+											},
+											"visibility": "internal"
+										}
+									],
+									"name": "Response",
+									"nameLocation": "1672:8:1",
+									"nodeType": "StructDefinition",
+									"scope": 64,
+									"src": "1665:214:1",
+									"visibility": "public"
+								},
+								{
+									"canonicalName": "IFheAgent.Proof",
+									"documentation": {
+										"id": 42,
+										"nodeType": "StructuredDocumentation",
+										"src": "1885:164:1",
+										"text": " @notice Toplevel proof\n @param merkleProof Merkle proof corresponding to the attestation response.\n @param data Attestation response."
+									},
+									"id": 49,
+									"members": [
+										{
+											"constant": false,
+											"id": 45,
+											"mutability": "mutable",
+											"name": "merkleProof",
+											"nameLocation": "2087:11:1",
+											"nodeType": "VariableDeclaration",
+											"scope": 49,
+											"src": "2077:21:1",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_array$_t_bytes32_$dyn_storage_ptr",
+												"typeString": "bytes32[]"
+											},
+											"typeName": {
+												"baseType": {
+													"id": 43,
+													"name": "bytes32",
+													"nodeType": "ElementaryTypeName",
+													"src": "2077:7:1",
+													"typeDescriptions": {
+														"typeIdentifier": "t_bytes32",
+														"typeString": "bytes32"
+													}
+												},
+												"id": 44,
+												"nodeType": "ArrayTypeName",
+												"src": "2077:9:1",
+												"typeDescriptions": {
+													"typeIdentifier": "t_array$_t_bytes32_$dyn_storage_ptr",
+													"typeString": "bytes32[]"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 48,
+											"mutability": "mutable",
+											"name": "data",
+											"nameLocation": "2117:4:1",
+											"nodeType": "VariableDeclaration",
+											"scope": 49,
+											"src": "2108:13:1",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_struct$_Response_$41_storage_ptr",
+												"typeString": "struct IFheAgent.Response"
+											},
+											"typeName": {
+												"id": 47,
+												"nodeType": "UserDefinedTypeName",
+												"pathNode": {
+													"id": 46,
+													"name": "Response",
+													"nameLocations": [
+														"2108:8:1"
+													],
+													"nodeType": "IdentifierPath",
+													"referencedDeclaration": 41,
+													"src": "2108:8:1"
+												},
+												"referencedDeclaration": 41,
+												"src": "2108:8:1",
+												"typeDescriptions": {
+													"typeIdentifier": "t_struct$_Response_$41_storage_ptr",
+													"typeString": "struct IFheAgent.Response"
+												}
+											},
+											"visibility": "internal"
+										}
+									],
+									"name": "Proof",
+									"nameLocation": "2061:5:1",
+									"nodeType": "StructDefinition",
+									"scope": 64,
+									"src": "2054:74:1",
+									"visibility": "public"
+								},
+								{
+									"canonicalName": "IFheAgent.RequestBody",
+									"documentation": {
+										"id": 50,
+										"nodeType": "StructuredDocumentation",
+										"src": "2134:263:1",
+										"text": " @notice Request body for FheAgent attestation type\n @param data_id Data id to fetch the data from\n @param data_hash Hash of the data\n @param model Model to run on the data\n @param abi_signature ABI signature of the data*"
+									},
+									"id": 59,
+									"members": [
+										{
+											"constant": false,
+											"id": 52,
+											"mutability": "mutable",
+											"name": "data_id",
+											"nameLocation": "2438:7:1",
+											"nodeType": "VariableDeclaration",
+											"scope": 59,
+											"src": "2431:14:1",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_string_storage_ptr",
+												"typeString": "string"
+											},
+											"typeName": {
+												"id": 51,
+												"name": "string",
+												"nodeType": "ElementaryTypeName",
+												"src": "2431:6:1",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_storage_ptr",
+													"typeString": "string"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 54,
+											"mutability": "mutable",
+											"name": "data_hash",
+											"nameLocation": "2462:9:1",
+											"nodeType": "VariableDeclaration",
+											"scope": 59,
+											"src": "2455:16:1",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_string_storage_ptr",
+												"typeString": "string"
+											},
+											"typeName": {
+												"id": 53,
+												"name": "string",
+												"nodeType": "ElementaryTypeName",
+												"src": "2455:6:1",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_storage_ptr",
+													"typeString": "string"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 56,
+											"mutability": "mutable",
+											"name": "model",
+											"nameLocation": "2488:5:1",
+											"nodeType": "VariableDeclaration",
+											"scope": 59,
+											"src": "2481:12:1",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_string_storage_ptr",
+												"typeString": "string"
+											},
+											"typeName": {
+												"id": 55,
+												"name": "string",
+												"nodeType": "ElementaryTypeName",
+												"src": "2481:6:1",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_storage_ptr",
+													"typeString": "string"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 58,
+											"mutability": "mutable",
+											"name": "abi_signature",
+											"nameLocation": "2510:13:1",
+											"nodeType": "VariableDeclaration",
+											"scope": 59,
+											"src": "2503:20:1",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_string_storage_ptr",
+												"typeString": "string"
+											},
+											"typeName": {
+												"id": 57,
+												"name": "string",
+												"nodeType": "ElementaryTypeName",
+												"src": "2503:6:1",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_storage_ptr",
+													"typeString": "string"
+												}
+											},
+											"visibility": "internal"
+										}
+									],
+									"name": "RequestBody",
+									"nameLocation": "2409:11:1",
+									"nodeType": "StructDefinition",
+									"scope": 64,
+									"src": "2402:128:1",
+									"visibility": "public"
+								},
+								{
+									"canonicalName": "IFheAgent.ResponseBody",
+									"documentation": {
+										"id": 60,
+										"nodeType": "StructuredDocumentation",
+										"src": "2536:120:1",
+										"text": " @notice Response body for FheAgent attestation type.\n @param abi_encoded_data ABI encoded data*"
+									},
+									"id": 63,
+									"members": [
+										{
+											"constant": false,
+											"id": 62,
+											"mutability": "mutable",
+											"name": "abi_encoded_data",
+											"nameLocation": "2697:16:1",
+											"nodeType": "VariableDeclaration",
+											"scope": 63,
+											"src": "2691:22:1",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_bytes_storage_ptr",
+												"typeString": "bytes"
+											},
+											"typeName": {
+												"id": 61,
+												"name": "bytes",
+												"nodeType": "ElementaryTypeName",
+												"src": "2691:5:1",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes_storage_ptr",
+													"typeString": "bytes"
+												}
+											},
+											"visibility": "internal"
+										}
+									],
+									"name": "ResponseBody",
+									"nameLocation": "2668:12:1",
+									"nodeType": "StructDefinition",
+									"scope": 64,
+									"src": "2661:59:1",
+									"visibility": "public"
+								}
+							],
+							"scope": 65,
+							"src": "527:2195:1",
+							"usedErrors": [],
+							"usedEvents": []
+						}
+					],
+					"src": "32:2691:1"
+				},
+				"id": 1
+			}
+		}
+	}
+}

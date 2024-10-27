@@ -1,0 +1,146 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "bytes32[]",
+								"name": "merkleProof",
+								"type": "bytes32[]"
+							},
+							{
+								"components": [
+									{
+										"internalType": "bytes32",
+										"name": "attestationType",
+										"type": "bytes32"
+									},
+									{
+										"internalType": "bytes32",
+										"name": "sourceId",
+										"type": "bytes32"
+									},
+									{
+										"internalType": "uint64",
+										"name": "votingRound",
+										"type": "uint64"
+									},
+									{
+										"internalType": "uint64",
+										"name": "lowestUsedTimestamp",
+										"type": "uint64"
+									},
+									{
+										"components": [
+											{
+												"internalType": "string",
+												"name": "data_id",
+												"type": "string"
+											},
+											{
+												"internalType": "string",
+												"name": "data_hash",
+												"type": "string"
+											},
+											{
+												"internalType": "string",
+												"name": "model",
+												"type": "string"
+											},
+											{
+												"internalType": "string",
+												"name": "abi_signature",
+												"type": "string"
+											}
+										],
+										"internalType": "struct IFheAgent.RequestBody",
+										"name": "requestBody",
+										"type": "tuple"
+									},
+									{
+										"components": [
+											{
+												"internalType": "bytes",
+												"name": "abi_encoded_data",
+												"type": "bytes"
+											}
+										],
+										"internalType": "struct IFheAgent.ResponseBody",
+										"name": "responseBody",
+										"type": "tuple"
+									}
+								],
+								"internalType": "struct IFheAgent.Response",
+								"name": "data",
+								"type": "tuple"
+							}
+						],
+						"internalType": "struct IFheAgent.Proof",
+						"name": "_proof",
+						"type": "tuple"
+					}
+				],
+				"name": "verifyFheAgent",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "_proved",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"verification/contracts/generated/interfaces/verification/IFheAgentVerification.sol": "IFheAgentVerification"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"verification/contracts/generated/interfaces/verification/IFheAgentVerification.sol": {
+			"keccak256": "0x7d5bede0b5e4b51955a286ff75009e9f4e8508812d2c614ef2c1f2c02cf198e0",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7361cf5a1d0d551bce3352144289052444034639aef5a0fc5038d9660499474c",
+				"dweb:/ipfs/QmW7b6QGTnrrE1rFeuGJTvuaq21bwBghXgZ6LUno8yHPdN"
+			]
+		},
+		"verification/contracts/interfaces/types/IFheAgent.sol": {
+			"keccak256": "0x171f46b944cb6f84e99ed7afc6a0f0441fe41d1fb071231b2ad21c58391e4fca",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a46e9ed7136fa05f7dc4e7fb515ecdb889775e8b1c5914de27c2f58c4b1a75ab",
+				"dweb:/ipfs/QmbPW9piwHPj7FvVFbUrZdy16kWeSjzHd7ancqz8tNo3zJ"
+			]
+		}
+	},
+	"version": 1
+}
