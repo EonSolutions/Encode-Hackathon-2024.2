@@ -161,12 +161,12 @@ const DashboardPage = () => {
     });
     const doc_ref = (await res1.json()).id;
 
-    setActiveStep(1);
-
     // Step 2: Prepare attestation request
+    setActiveStep(1);
 
     const abi_signature = {
       DataEntry: {
+        id: "bytes32",
         encrypted_data_hash: "bytes32",
         encrypted_result: "string",
         encrypted_data: "string",
@@ -187,15 +187,12 @@ const DashboardPage = () => {
     });
     const req = (await res2.json()).response;
 
-    console.log(req);
-
-    // Decode
-
-    setActiveStep(2);
-
     // Step 3: Sign transaction
-    // Run a function on contract with the abi encoded request
-    contract.contract!.methods["addDataEntry"](req).send({ from: walletId });
+    setActiveStep(2);
+    await contract.contract!.methods["addDataEntry"](req).send({ from: walletId });
+
+    // Step 4: Decrypt result
+    setActiveStep(3);
   };
 
   // Simulated steps data
